@@ -1,0 +1,57 @@
+<div ui-content-for="title">
+	<span>用户账单统计</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_user_balance_flow">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('30day')">最近30天</button>
+	<button class="btn btn-success btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('12month')">最近12月</button>
+</div>
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的赠送金额，充值金额，消费金额数</h4>
+			<canvas id="bill_line" class="chart chart-line" data="bill_data" labels="bill_labels" series="bill_series"></canvas>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的赠送金额，充值金额，消费金额数</h4>
+		</div>
+		<div class="col-xs-4 col-xs-offset-1" style="padding-left: 0;padding-right: 0;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>日期</td>
+					<td>赠送金额</td>
+				</tr>
+				<tr ng-repeat="json in jsons">
+					<td>{{json.U}}</td>
+					<td>{{json.C}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-2" style="padding-left: 0;padding-right: 0;margin-left: -2px;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>充值金额</td>
+				</tr>
+				<tr ng-repeat="data in datas">
+					<td>{{data.C}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-2" style="padding-left: 0;padding-right: 0;margin-left: -2px;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>消费金额</td>
+				</tr>
+				<tr ng-repeat="message in messages">
+					<td>{{message.C}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

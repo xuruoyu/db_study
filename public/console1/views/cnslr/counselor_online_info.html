@@ -1,0 +1,74 @@
+<div ui-content-for="title">
+    <span>该咨询师上下线记录</span>
+</div>
+
+<div class="scrollable">
+    <div class="scrollable-header section">
+        <div class="panel panel-title panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">姓名</div>
+                    <div class="col-xs-3">操作类型</div>
+                    <div class="col-xs-3 xj-padding0">发生时间</div>
+                    <div class="col-xs-3 text-right">操作人</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scrollable-content section" ui-scroll-bottom="page.next()">
+        <div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0" class="loading app-content-loading">
+            <span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+        </div>
+        <div class="panel-group" ng-show="page.elements.length>0">
+            <div class="panel panel-default" ng-repeat="e in page.elements">
+                <div class="panel-heading" ng-click="$parent.selected==$index?$parent.selected=null:$parent.selected=$index">
+                    <div class="row xj-margin0">
+                        <div class="col-xs-3 xj-padding0">
+                            <span>{{e.counselor.realName}}</span>
+                        </div>
+                        <div class="col-xs-3 xj-padding0">
+                            <span>{{type[e.type]}}</span>
+                        </div>
+                        <div class="col-xs-3 xj-padding0">
+                            <span>{{e.operateTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                        </div>
+                        <div class="col-xs-3 xj-padding0 text-right">
+                            <span>{{source[e.source]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-show="$parent.selected==$index">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>
+                                <strong>记录编号：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.id}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>咨询师昵称：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.counselor.user.nickName}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>咨询师手机号：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.counselor.user.mobile}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+        <span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+    </button>
+</div>

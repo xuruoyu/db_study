@@ -1,0 +1,111 @@
+<div ui-content-for="title">
+    <span>用户组织列表</span>
+</div>
+<div ui-content-for="navbarRight">
+    <button class="btn" ui-turn-on="userGroupFrom" ng-click="add()">
+        <i class="fa fa-plus"></i>
+    </button>
+    <div class="btn-group pull-right">
+        <button class="btn" ui-toggle="uiSidebarRight">
+            <i class="fa fa-filter"></i>
+        </button>
+    </div>
+</div>
+<div ui-content-for="sidebarRight">
+    <form name="filterForm" ng-submit="reload()">
+        <fieldset>
+            <div class="form-group">
+                <label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="组织名称">
+            </div>
+        </fieldset>
+        <button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+    </form>
+</div>
+
+<div class="scrollable">
+    <div class="scrollable-header section">
+        <div class="panel panel-title panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-4">编号</div>
+                    <div class="col-xs-4">名称</div>
+                    <div class="col-xs-4 text-right">联系人</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scrollable-content section" ui-scroll-bottom="page.next()">
+        <div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0">
+            <span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+        </div>
+        <div class="panel-group" ng-show="page.elements.length>0">
+            <div class="panel panel-default" ng-repeat="e in page.elements">
+                <div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+                    <div class="row xj-margin0">
+                        <div class="col-xs-4 xj-padding0">
+                            <span>{{e.id}}</span>
+                        </div>
+                        <div class="col-xs-4 xj-padding0">
+                            <span>{{e.name}}</span>
+                        </div>
+                        <div class="col-xs-4 xj-padding0 text-right">
+                            <span>暂无数据</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-show="selected==$index">
+                    <table class="table table-striped">
+
+                    </table>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="userGroupFrom" ng-click="modify(e)" disabled>修改资料</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+        <span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+    </button>
+</div>
+
+<div ui-content-for="modals">
+    <!--新增和修改用户组织-->
+    <div class="modal modal-overlay scrollable" ui-if="userGroupFrom" ui-state="userGroupFrom">
+        <div class="scrollable-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" ui-turn-off="userGroupFrom" ng-disabled="isLoading">&times;</button>
+                        <h4 class="modal-title">{{modalTitle}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-content">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" stop-event="touchend">
+                        <form name="userGroupFrom" ng-submit="saveUserGroup()" novalidate>
+                            <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':userGroupFrom.name.$invalid && !userGroupFrom.name.$pristine}">
+                                <span class="text-danger">*</span> <label>组织名称</label> <input type="text" class="form-control" name="name" ng-model="userGroup.name" placeholder="用户组织名称" required ng-minlength="2" ng-maxlength="32" />
+                            </div>
+                            <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                <div class="col-xs-6">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="userGroupFrom.$invalid||isLoading">保存</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="userGroupFrom" ng-disabled="isLoading" ng-click="reload()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

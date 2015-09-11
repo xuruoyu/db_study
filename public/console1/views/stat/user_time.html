@@ -1,0 +1,57 @@
+<div ui-content-for="title">
+	<span>通话次数统计</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_session_count">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('30day')">最近30天</button>
+	<button class="btn btn-success btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('12month')">最近12月</button>
+</div>
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的未接通、已接通、已完成的通话</h4>
+			<canvas id="time_line" class="chart chart-line" data="time_data" labels="time_labels" series="time_series"></canvas>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的未接通、已接通、已完成的通话</h4>
+		</div>
+		<div class="col-xs-4 col-xs-offset-1" style="padding-left: 0;padding-right: 0;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>日期</td>
+					<td>未接通</td>
+				</tr>
+				<tr ng-repeat="data in datas">
+					<td>{{data.U}}</td>
+					<td>{{data.C}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-2" style="padding-left: 0;padding-right: 0;margin-left: -2px;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>已接通</td>
+				</tr>
+				<tr ng-repeat="message in messages">
+					<td>{{message.C}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-2" style="padding-left: 0;padding-right: 0;margin-left: -2px;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>已完成的通话</td>
+				</tr>
+				<tr ng-repeat="json in jsons">
+					<td>{{json.C}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

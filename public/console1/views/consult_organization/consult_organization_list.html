@@ -1,0 +1,293 @@
+<div ui-content-for="title">
+    <span>咨询机构列表</span>
+</div>
+<div ui-content-for="navbarRight">
+    <button class="btn" ui-turn-on="institutionForm" ng-click="add()" xx-permission="p_post_institution">
+        <i class="fa fa-plus"></i>
+    </button>
+    <div class="btn-group pull-right">
+        <button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_institution">
+            <i class="fa fa-filter"></i>
+        </button>
+    </div>
+</div>
+<div ui-content-for="sidebarRight">
+    <form name="filterForm" ng-submit="reload()">
+        <fieldset>
+            <div class="form-group">
+                <label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="机构名称/联系人名称/联系电话">
+            </div>
+        </fieldset>
+        <button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+    </form>
+</div>
+
+<div class="scrollable">
+    <div class="scrollable-header section">
+        <div class="panel panel-title panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-5">名称</div>
+                    <div class="col-xs-5">联系人</div>
+                    <div class="col-xs-2 text-right">状态</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scrollable-content section" ui-scroll-bottom="page.next()">
+        <div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0">
+            <span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+        </div>
+        <div class="panel-group" ng-show="page.elements.length>0">
+            <div class="panel panel-default" ng-repeat="e in page.elements">
+                <div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+                    <div class="row xj-margin0">
+                        <div class="col-xs-5 xj-padding0">
+                            <span>{{e.name}}</span>
+                        </div>
+                        <div class="col-xs-5 xj-padding0">
+                            <span>{{e.contactsName}}</span>
+                        </div>
+                        <div class="col-xs-2 xj-padding0 text-right">
+                            <span>{{stateMap[e.state]}}</span>
+                            <span ng-if="!e.state">正常</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-show="selected==$index">
+                    <table class="table table-striped">
+                        <tr>
+                            <td style="width:20%;"><strong>机构编号：</strong></td>
+                            <td><span>{{e.id}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>联系人电话：</strong></td>
+                            <td><span>{{e.contactsPhone}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>联系地址：</strong></td>
+                            <td><span>{{e.contactsAddr}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>账户开户行：</strong></td>
+                            <td ng-if="e.bank=='BCM'"><span>交通银行</span></td>
+                            <td ng-if="e.bank=='SPDB'"><span>浦发银行</span></td>
+                            <td ng-if="e.bank=='CMB'"><span>招商银行</span></td>
+                            <td ng-if="e.bank=='CMBC'"><span>中国民生银行</span></td>
+                            <td ng-if="e.bank=='CIB'"><span>兴业银行</span></td>
+                            <td ng-if="e.bank=='PSBC'"><span>中国邮政储蓄银行</span></td>
+                            <td ng-if="e.bank=='BOC'"><span>中国银行</span></td>
+                            <td ng-if="e.bank=='ABC'"><span>中国农业银行</span></td>
+                            <td ng-if="e.bank=='CCB'"><span>建设银行</span></td>
+                            <td ng-if="e.bank=='ICBC'"><span>中国工商银行</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>账户号码：</strong></td>
+                            <td><span>{{e.cardNumber}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>抽佣比例：</strong></td>
+                            <td><span>{{e.brokerageRatio}}%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>机构简介：</strong></td>
+                            <td><span>{{e.brief}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>机构详情：</strong></td>
+                            <td><span ng-bind-html="e.introduction"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>机构所在地：</strong></td>
+                            <td><span>{{e.district.owner.owner.name}}{{e.district.owner.name}}{{e.district.name}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>机构自定义页面：</strong></td>
+                            <td><span>{{e.url}}</span></td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="institutionForm" ng-click="modify(e)">修改资料</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="photoUpload" ng-click="initUploadPhoto(e)" xx-permission="p_put_institution_photo">上传主图</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="cnslrForm" ng-click="organization_counselor(e)" disabled>旗下咨询师</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+        <span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+    </button>
+</div>
+
+<div ui-content-for="modals">
+    <!--上传咨询机构的主图-->
+    <div class="modal modal-overlay scrollable" ui-if="photoUpload" ui-state="photoUpload">
+        <div class="scrollable-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">&times;</button>
+                        <h4 class="modal-title">{{modalTitle}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-content">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <h4>咨询机构当前照片</h4>
+                                <img id="photo_old" class="center-block" style="max-width: 640; height: auto;" src="{{oldPhoto}}" alt="暂无照片" />
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <h4>新上传照片</h4>
+                                <img id="photo_preview" class="center-block" ngf-src="photoFile" style="max-width: 640; height: auto;" ngf-default-src="img/org_photo_placeholder.jpg" />
+                                <div class="progress" ng-show="uploadPercentage!=null">
+                                    <div class="progress-bar progress-bar-success" style="min-width: 2em;width: {{uploadPercentage}}%;">{{uploadPercentage}}%</div>
+                                </div>
+                                <br />
+                                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isLoading||uploadPercentage!=null" ngf-select ngf-change="selectPhoto($files)" accept="image/jpeg">选择图片</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-footer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-footer">
+                        <div class="col-xs-6 col-md-offset-2 col-md-4">
+                            <button class="btn btn-primary btn-lg btn-block" ng-click="uploadPhoto()" ng-disabled="photoFile==null||isLoading||uploadPercentage!=null">上传</button>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button class="btn btn-default btn-lg btn-block" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--旗下咨询师列表-->
+    <div class="modal modal-overlay scrollable" ui-if="cnslrForm" ui-state="cnslrForm">
+        <form name="cnslrForm" ng-submit="saveCnslr()" novalidate>
+            <div class="row">
+                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                    <div class="col-xs-12">
+                        <button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="cnslrForm" ng-disabled="isLoading">返回</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--修改咨询机构资料-->
+    <div class="modal modal-overlay scrollable" ui-if="institutionForm" ui-state="institutionForm">
+		<div class="scrollable-header">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" ui-turn-off="institutionForm" ng-disabled="isLoading">&times;</button>
+						<h4 class="modal-title">{{modalTitle}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body" stop-event="touchend">
+						<form name="institutionForm" ng-submit="saveInstitution()" novalidate>
+							<div class="row">
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':institutionForm.name.$invalid && !institutionForm.name.$pristine}">
+									<span class="text-danger">*</span> <label>机构名称</label> <input type="text" class="form-control" name="name" ng-model="institution.name" placeholder="咨询机构的名称" required ng-minlength="2" ng-maxlength="32" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.contactsName.$invalid && !institutionForm.contactsName.$pristine }">
+									<span class="text-danger">*</span> <label>联系人姓名</label> <input type="text" class="form-control" name="contactsName" ng-model="institution.contactsName" placeholder="咨询机构联系人姓名" required ng-minlength="2" ng-maxlength="32" />
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':institutionForm.contactsPhone.$invalid && !institutionForm.contactsPhone.$pristine}">
+									<span class="text-danger">*</span> <label>联系人电话</label> <span class="text-info">(有效的中国大陆手机号，或固定电话号码（格式：区号-号码）)</span> <input type="text" class="form-control" name="contactsPhone" ng-model="institution.contactsPhone" placeholder="咨询机构联络人手机号码" required ng-minlength="11" ng-maxlength="13" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.contactsAddr.$invalid && !institutionForm.contactsAddr.$pristine }">
+									<span class="text-danger">*</span> <label>联系地址</label> <input type="text" class="form-control" name="contactsAddr" ng-model="institution.contactsAddr" placeholder="咨询机构联系地址" required ng-minlength="2" ng-maxlength="64" />
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.bank.$invalid && !institutionForm.bank.$pristine }">
+									<label>账户开户行</label> <span class="text-info">(非必选，但是选择之后必须填写银行账户号码)</span></br>
+                                    <select class="form-control"  name="bank" ng-model="institution.bank" ng-change="set_disabled()">
+                                    <option></option>
+                                    <option value="BCM">交通银行</option>
+                                    <option value="SPDB">浦发银行</option>
+                                    <option value="CMB">招商银行</option>
+                                    <option value="CMBC">中国民生银行</option>
+                                    <option value="CIB">兴业银行</option>
+                                    <option value="PSBC">中国邮政储蓄银行</option>
+                                    <option value="BOC">中国银行</option>
+                                    <option value="ABC">中国农业银行</option>
+                                    <option value="CCB">建设银行</option>
+                                    <option value="ICBC">中国工商银行</option>
+                                    </select>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.cardNumber.$invalid && !institutionForm.cardNumber.$pristine }">
+									<label>账户号码</label> <span class="text-info">(选填，5-64个字符，不选择银行开户行，此项将不可用)</span> <input type="text" class="form-control" name="cardNumber" ng-model="institution.cardNumber" placeholder="咨询机构有效的银行账号" ng-minlength="5" ng-maxlength="64" ng-disabled="disabled"/>
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.brokerageRatio.$invalid && !institutionForm.brokerageRatio.$pristine }">
+									<label>抽佣比例(%)</label> <span class="text-info">(选填，0-100之间，最多小数点后两位)</span> <input type="number" class="form-control" name="brokerageRatio" ng-model="institution.brokerageRatio" placeholder="咨询机构与公司协商的佣金比例"  max="100" min="0" ng-pattern="/^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$/" />
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.brief.$invalid && !institutionForm.brief.$pristine }">
+									<span class="text-danger">*</span><label>机构简介</label> <span class="text-info">(必填，4-32个字符)</span> <input type="text" class="form-control" name="brief" ng-model="institution.brief" placeholder="咨询机构简要信息"  required ng-minlength="4" ng-maxlength="32" />
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <span class="text-danger">*</span><label>机构详情</label> <span class="text-info">(选填，64-2048个字符)</span>
+
+                                    <div id="institution" text-angular="text-angular" name="introduction" ng-model="institution.introduction"></div>
+                                    <!--<textarea type="text" class="form-control" name="introduction" ng-model="institution.introduction" placeholder="咨询机构详细信息"  required   ng-minlength="64" ng-maxlength="2048"></textarea>-->
+                                    <textarea style="display: none" ng-model="institution.introduction" style="width: 100%" required   ng-minlength="64" ng-maxlength="2048"></textarea>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.district.$invalid && !institutionForm.district.$pristine }">
+									<span class="text-danger">*</span><label>机构所在地</label> <span class="text-info">(必选)</span>
+                                    <div class="breadcrumb">
+                                        <label>省</label>
+                                        <select id="province" class="form-control" required ng-model="province"  ng-change="add_city(province)" ng-options="p.code as p.name for p in provinces">
+                                            <option value="{{p.code}}">{{p.name}}</option>
+                                        </select>
+                                        <!--<select class="form-control" required ng-model="province"  ng-change="add_city(province)">-->
+                                            <!--<option ng-repeat="p in provinces" value="{{p.code}}" ng-selected="">{{p.name}}</option>-->
+                                        <!--</select>-->
+                                        <label>市</label>
+                                        <select id="city" class="form-control" required ng-model="city"  ng-change="add_district(city)" ng-options="p.code as p.name for p in citys">
+                                            <option value="{{c.code}}">{{c.name}}</option>
+                                        </select>
+                                        <label>区</label>
+                                        <select id="district" class="form-control" required ng-model="district" ng-change="set_institution(district)" ng-options="p.code as p.name for p in districts">
+                                            <option value="{{d.code}}">{{d.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':institutionForm.brief.$invalid && !institutionForm.brief.$pristine }">
+                                    <label>机构自定义页面</label> <span class="text-info">(选填，0-512字符)</span>
+                                    <input type="text" class="form-control" name="url" ng-model="institution.url" placeholder="机构自定义页面url"  ng-minlength="0" ng-maxlength="512" />
+                                </div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<div class="col-xs-6">
+										<button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="institutionForm.$invalid||isLoading">保存</button>
+									</div>
+									<div class="col-xs-6">
+										<button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="institutionForm" ng-disabled="isLoading">取消</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

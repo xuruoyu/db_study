@@ -1,0 +1,4 @@
+/*字体自动换行*/
+.wordbreak {
+    word-break: break-all;
+}

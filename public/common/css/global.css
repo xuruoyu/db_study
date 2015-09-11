@@ -1,0 +1,1451 @@
+/*---------------------------------------------------*/
+/* ------------------ 通用样式 ---------------------- */
+/*---------------------------------------------------*/
+
+/* ---------------- 页面加载控件样式 by zhao---------------- */
+.Loading {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0px;
+	opacity: 0.7;
+	background-color: #000;
+	z-index: 99999;
+}
+.Loading img {
+	margin: 50% 0 0 46%;
+}
+.spinner {
+	margin: 170px auto;
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+.circle {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.circle:before {
+	content: '';
+	display: block;
+	margin: 0 auto;
+	width: 15%;
+	height: 15%;
+	background-color: #fff;
+	border-radius: 100%;
+	-webkit-animation: fadedelay 1.2s infinite ease-in-out both;
+	animation: fadedelay 1.2s infinite ease-in-out both;
+}
+.circle2 {
+	transform: rotate(30deg);
+	-webkit-transform: rotate(30deg)
+}
+.circle3 {
+	transform: rotate(60deg);
+	-webkit-transform: rotate(60deg)
+}
+.circle4 {
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg)
+}
+.circle5 {
+	transform: rotate(120deg);
+	-webkit-transform: rotate(120deg)
+}
+.circle6 {
+	transform: rotate(150deg);
+	-webkit-transform: rotate(150deg)
+}
+.circle7 {
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg)
+}
+.circle8 {
+	transform: rotate(210deg);
+	-webkit-transform: rotate(210deg)
+}
+.circle9 {
+	transform: rotate(240deg);
+	-webkit-transform: rotate(240deg)
+}
+.circle10 {
+	transform: rotate(270deg);
+	-webkit-transform: rotate(270deg)
+}
+.circle11 {
+	transform: rotate(300deg);
+	-webkit-transform: rotate(300deg)
+}
+.circle12 {
+	transform: rotate(330deg);
+	-webkit-transform: rotate(330deg)
+}
+.circle2:before {
+	animation-delay: -1.1s;
+	-webkit-animation-delay: -1.1s
+}
+.circle3:before {
+	animation-delay: -1.0s;
+	-webkit-animation-delay: -1.0s
+}
+.circle4:before {
+	animation-delay: -0.9s;
+	-webkit-animation-delay: -0.9s
+}
+.circle5:before {
+	animation-delay: -0.8s;
+	-webkit-animation-delay: -0.8s
+}
+.circle6:before {
+	animation-delay: -0.7s;
+	-webkit-animation-delay: -0.7s
+}
+.circle7:before {
+	animation-delay: -0.6s;
+	-webkit-animation-delay: -0.6s
+}
+.circle8:before {
+	animation-delay: -0.5s;
+	-webkit-animation-delay: -0.5s
+}
+.circle9:before {
+	animation-delay: -0.4s;
+	-webkit-animation-delay: -0.4s
+}
+.circle10:before {
+	animation-delay: -0.3s;
+	-webkit-animation-delay: -0.3s
+}
+.circle11:before {
+	animation-delay: -0.2s;
+	-webkit-animation-delay: -0.2s
+}
+.circle12:before {
+	animation-delay: -0.1s;
+	-webkit-animation-delay: -0.1s
+}
+
+/* ---------------- 通用布局样式 - by kevin ---------------- */
+/* 用于清除container-fluid 默认边距 */
+.xj-padding0 {
+    padding:0px 0px !important;
+}
+/* 用于清除row 默认边距 */
+.xj-margin0 {
+    margin:0px 0px !important;
+}
+/* 控制靠左 */
+.xj-float-left {
+    float: left;
+}
+/* 控制靠右 */
+.xj-float-right {
+    float: right;
+}
+/* 控制左边边距：10 */
+.xj-margin-left-10 {
+    margin-left: 10px !important;
+}
+/* 控制左边边距：5 */
+.xj-margin-left-5 {
+    margin-left: 5px !important;
+}
+/* 控制左边边距：2 */
+.xj-margin-left-2 {
+    margin-left: 2px !important;
+}
+/* 控制顶部边距：5 */
+.xj-margin-top-5 {
+    margin-top: 5px !important;
+}
+/* 控制顶部边距：10 */
+.xj-margin-top-10 {
+    margin-top: 10px !important;
+}
+/* 控制顶部边距：40 */
+.xj-margin-top-40 {
+    margin-top: 40px !important;
+}
+/*消除顶端body 50px的留白*/
+.xj-margin-top--50{
+    margin-top: -50px;
+}
+/* 控制底部边距：0 */
+.xj-margin-bottom-0 {
+    margin-bottom: 0px !important;
+}
+/* 控制底部边距：5 */
+.xj-margin-bottom-5 {
+    margin-bottom: 5px !important;
+}
+/* 控制底部边距：10 */
+.xj-margin-bottom-10 {
+    margin-bottom: 10px !important;
+}
+/* 控制左边边距：90 */
+.xj-padding-left-90 {
+    padding-left: 90px !important;
+}
+/* 控制左边边距：70 */
+.xj-padding-left-70 {
+    padding-left: 70px !important;
+}
+/* 控制左边边距：10 */
+.xj-padding-left-10 {
+    padding-left: 10px !important;
+}
+/* 控制左边边距：5 */
+.xj-padding-left-5 {
+    padding-left: 5px !important;
+}
+/* 控制左边边距：2 */
+.xj-padding-left-2 {
+    padding-left: 2px !important;
+}
+/* 控制左边边距：0 */
+.xj-padding-left-0 {
+    padding-left: 0px !important;
+}
+/* 控制右边边距：0 */
+.xj-padding-right-0 {
+    padding-right: 0px !important;
+}
+/* 控制右边边距：5 */
+.xj-padding-right-5 {
+    padding-right: 5px !important;
+}
+/* 控制右边边距：10 */
+.xj-padding-right-10 {
+    padding-right: 10px !important;
+}
+/* 控制顶部边距：5 */
+.xj-padding-top-5 {
+    padding-top: 5px !important;
+}
+/* 控制底部边距：5 */
+.xj-padding-bottom-5 {
+    padding-bottom: 5px !important;
+}
+/* 控制底部边距：10 */
+.xj-padding-bottom-10 {
+    padding-bottom: 10px !important;
+}
+/* 控制底部边距：70 */
+.xj-padding-bottom-70 {
+    padding-bottom: 70px !important;
+}
+
+
+/* 垂直居中 : 2列中右边一列靠右边垂直居中 todo error in phone display */
+.xj-vertical-center {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-100%, -50%);
+}
+
+/*----------------通用其他元素样式 by kevin-----------------------*/
+/* 1 顶部边框样式：灰色 */
+.xj-border-top-1 {
+    border-top: 1px solid #dddddd !important;;
+}
+/* 1 顶部边框样式：灰色虚线 */
+.xj-border-top-3 {
+    border-top: 1px dashed #dddddd !important;;
+}
+/* 1 底部边框样式：灰色 */
+.xj-border-bottom-1 {
+    border-bottom: 1px solid #dddddd !important;;
+}
+/* 2 顶部边框样式：深黄色 */
+.xj-border-top-2 {
+    border-top: 1px solid #F89337 !important;
+}
+/* 2 底部边框样式：深黄色 */
+.xj-border-bottom-2 {
+    border-bottom: 1px solid #F89337 !important;;
+}
+/* 1 竖线样式：灰色 */
+.xj-line-vertical-right-1 {
+    border-right:1px #dddddd solid !important;;
+    height:25px;
+}
+/* 2 竖线样式：深黄色 放置文字 */
+.xj-line-vertical-right-2 {
+    border-right:1px #F89337 solid !important;;
+    height:25px;
+}
+/* 3 竖线样式：深黄色 放置按钮 */
+.xj-line-vertical-right-3 {
+    border-right:1px #F89337 solid !important;;
+    height:32px;
+}
+/* 鼠标样式 */
+.xj-cursor-pointer{
+    cursor: pointer;
+}
+/* 自动换行 */
+.xj-word-wrap {
+    word-wrap:break-word;
+}
+
+/*----------------通用颜色：背景/文字 - by kevin-------------------*/
+/* 默认背景色：黑色 */
+body {
+    color:#000;
+}
+/* 背景色：白色 */
+.xj-bg-color-1 {
+    background-color: #fff;
+}
+/* 背景色：浅灰色 */
+.xj-bg-color-2 {
+    background-color: #f9f9f9;
+}
+/* 背景色：浅黄色 */
+.xj-bg-color-3 {
+    background-color:#fef6a1;
+    border: 0;
+}
+/* 背景色：深黄色 */
+.xj-bg-color-4 {
+    background-color:#f89337;
+}
+
+/* 文字色：黑色。主标题 */
+.xj-txt-color-1 {
+    color:#000;
+}
+/* 文字色：白色。遮罩下文字 */
+.xj-txt-color-2 {
+    color:#fff;
+}
+/* 文字色：深灰色。一般文字 */
+.xj-txt-color-3 {
+    color:#666;
+}
+/* 文字色：浅灰色。注释性文字 */
+.xj-txt-color-4 {
+    color:#999;
+}
+/* 文字色：深黄色。货币数字 */
+.xj-txt-color-5 {
+    color:#f89337;
+}
+/* 文字色：深灰色 */
+.xj-txt-color-6 {
+    color:#333;
+}
+/* 文字色：红色 */
+.xj-txt-color-7 {
+    color:#eb2826;
+}
+
+/*----------------通用文字样式 - by kevin-------------------*/
+/* 1号文字：菜单名，标题，按钮文字 */
+.xj-txt-1 {
+    font-size:20px;
+    font-weight: 500;
+    vertical-align:middle;
+}
+/* 1号文字+粗体：有些页面用户昵称标题 */
+.xj-txt-1-nickname {
+    font-size:20px;
+    font-weight: 600;
+    vertical-align:middle;
+}
+/* 2号文字：一般性文字 */
+.xj-txt-2 {
+    font-size:18px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+/* 2号文字+行高：二级栏目标题 */
+.xj-txt-2-title {
+    font-size:18px;
+    line-height:22px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+/* 2号文字+行高：二级栏目标题 */
+.xj-txt-2-menu-title {
+    font-size: 18px;
+    font-weight: 500;
+    position: relative;
+    top: 5px;
+}
+/* 3号文字：货币单位、时间、说明性注释文字 */
+.xj-txt-3 {
+    font-size:14px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+/* 4号文字：列表子项中文字 等最小文字 */
+.xj-txt-4 {
+    font-size:12px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+/* 5号文字：未接通提示 */
+.xj-txt-5 {
+    font-size:14px;
+    font-weight: normal;
+    padding:0 0;
+    vertical-align: middle;
+    color: #fc7c17;
+}
+/* 6号文字：投诉字体 */
+.xj-txt-6 {
+    font-size:16px;
+    font-weight: normal;
+    padding:0 0;
+    vertical-align: middle;
+}
+/* 6号文字：投诉完成显示字体 */
+.xj-txt-7{
+    font-size:16px;
+    font-weight: normal;
+    padding:0 0;
+    vertical-align: middle;
+    color: #ccc;
+}
+/* 菜单中logo文字区域 */
+.xj-txt-logo-menu{
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+    display: inline-block;
+    margin-top: 12px;
+    margin-left: 8px;
+}
+
+/* 1号数字：货币值 */
+.xj-txt-number-1 {
+    font-size: 28px;
+    font-weight: 500;
+    padding:0 5px 0 5px;
+    vertical-align: middle;
+}
+/* 2号数字：货币值 */
+.xj-txt-number-2 {
+    font-size: 22px;
+    font-weight: 500;
+    padding:0 5px 0 5px;
+    vertical-align: middle;
+}
+/* 3号数字：货币值 */
+.xj-txt-number-3 {
+    font-size:20px;
+    font-weight: 500;
+    padding:0 5px 0 5px;
+    vertical-align: middle;
+}
+/* 3号数字斜体：消息数目 */
+.xj-txt-number-3-italic {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+    font-style:italic;  /*斜体*/
+}
+/* 4号数字：货币值 */
+.xj-txt-number-4 {
+    font-size:16px;
+    font-weight: 500;
+    padding:0 2px 0 2px;
+    vertical-align: middle;
+}
+/* 5号数字：货币值 */
+.xj-txt-number-5 {
+    font-size:14px;
+    font-weight: 500;
+    padding:0 0;
+    vertical-align: middle;
+}
+
+
+/* 单词间距压缩 */
+.xj-txt-word-narrow {
+    word-spacing: -2px;
+}
+/* 字母间距压缩 */
+.xj-txt-word-narrow {
+    letter-spacing: -1px;
+}
+/* 文字行间距压缩 */
+.xj-txt-line-narrow-1 {
+    line-height: 18px;
+}
+/* 文字行间距压缩 */
+.xj-txt-line-narrow-2 {
+    line-height: 14px;
+}
+
+/* 一行内文字截断显示：控制在div中固定宽度 */
+.xj-txt-cut-in-line {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* ellipsis=加... + clip=不加...*/
+}
+
+/* 横线标题中文字高度*/
+.xj-txt-in-hr {
+    line-height: 45px;
+}
+/* 横线：在列表标题中*/
+.xj-hr-for-list {
+    background-color: #dddddd;
+    height: 1px;
+    margin-top: 20px;
+}
+/* 错误提示信息 */
+.xj-txt-error {
+    color:#f89337;
+    line-height:22px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+/* ------------------ 通用按钮样式  by kevin---------------------- */
+/* 一般性大按钮：1号字，登陆/退出登陆按钮 */
+.xj-btn-submit-light {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 0;
+    height: 50px;
+    color: #f89337;
+    border-color: #f89337;
+    background-color: #fff6a1;
+}
+.xj-btn-submit-light:hover,
+.xj-btn-submit-light:focus {
+    color: #fff;
+    border-color: #fd7b1b;
+    background-color: #fd7b1b;
+}
+/* 醒目大按钮：1号字，充值按钮 */
+.xj-btn-submit-dark {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    font-size:20px;
+    font-weight:600;
+    color: #fff;
+    border-color: #f89337;
+    background-color:#f89337;
+    height: 50px;
+    border-radius: 0;
+}
+
+.xj-btn-submit-dark:hover,
+.xj-btn-submit-dark:focus {
+    color: #fff;
+    border-color: #fd781b;
+    background-color:#fd781b;
+}
+/* 醒目大按钮：1号字，灰色 */
+.xj-btn-submit-gray {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    font-size:20px;
+    font-weight:600;
+    color: #fff;
+    border-color: #ccc;
+    background-color:#ccc;
+    height: 50px;
+    border-radius: 0;
+}
+
+.xj-btn-submit-gray:hover,
+.xj-btn-submit-gray:focus {
+    color: #fff;
+    border-color: #ccc;
+    background-color:#ccc;
+}
+.xj-btn-submit-gray[disabled]{
+    color: #fff;
+    border-color: #ccc;
+    background-color:#ccc;
+}
+/* 醒目大按钮：1号字，转离线按钮 */
+.xj-btn-submit-warn {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    font-size:20px;
+    font-weight:600;
+    color: #fff;
+    border-color: #eb2826;
+    background-color:#eb2826;
+    height: 50px;
+    border-radius: 0;
+}
+
+.xj-btn-submit-warn:hover,
+.xj-btn-submit-warn:focus {
+    color: #fff;
+    border-color: #eb2826;
+    background-color:#eb2826;
+}
+
+/* 按钮：模态弹出框中按钮样式 */
+.xj-btn-ok {
+    margin-left:0px !important;
+    margin-right:10px !important;
+    min-width:110px;
+    border-radius: 0px;
+    color:#fff;
+    background-color:#f89337;
+    border-color: #f89337;
+}
+.xj-btn-ok:hover,
+.xj-btn-ok:focus {
+    color:#fff;
+    background-color:#fd781b;
+    border-color: #fd781b;
+}
+.xj-btn-cancle {
+    margin-left:0px !important;
+    margin-right:10px !important;
+    min-width:110px;
+    border-radius: 0px;
+    background-color:#FEF6A1;
+    border-color: #f89337;
+    color:#f89337;
+}
+.xj-btn-cancle:hover,
+.xj-btn-cancle:focus {
+    background-color:#FEF6A1;
+    border-color: #f89337;
+    color:#f89337;
+}
+.xj-btn-ok-one {
+    min-width:200px;
+    height: 40px;
+    font-size:16px;
+    font-weight:600;
+    border-radius: 0px;
+    background-color:#f89337;
+    border-color: #f89337;
+    color:#fff;
+}
+.xj-btn-ok-one:hover,
+.xj-btn-ok-one:focus {
+    background-color:#fd781b;
+    border-color: #fd781b;
+    color:#fff;
+}
+
+/* 列表中默认按钮 */
+.xj-btn-default-list,
+.xj-btn-default-list:hover,
+.xj-btn-default-list:focus {
+    width: 74px;
+    border-radius: 22px;
+    border-color: #999;
+}
+/* 列表中危险提示按钮 */
+.xj-btn-danger-list {
+    width: 74px;
+    border-radius: 18px;
+    background-color: #fd7b1b;
+    border-color: #fd7b1b;
+    color:#fff;
+}
+.xj-btn-danger-list:hover,
+.xj-btn-danger-list:focus {
+    background-color: #fff6a1;
+    border-color: #f89337;
+    color:#f89337;
+}
+
+/* tag标签：默认显示 */
+.xj-btn-tag-display {
+    margin-right:8px;
+    margin-bottom:12px;
+    min-width: 85px;
+    border-radius: 18px;
+    background-color: #fff;
+    border-color: #999;
+    color:#000;
+}
+/* tag标签：未选中 */
+.xj-btn-tag-noselected {
+    margin-right:8px;
+    margin-bottom:12px;
+    min-width: 85px;
+    border-radius: 18px;
+    background-color: #fff;
+    border-color: #ccc;
+    color:#666;
+}
+/*
+.xj-btn-tag-noselected:hover{
+    background-color: #f89337;
+    border-color: #f89337;
+    color:#fff;
+}
+*/
+/* tag标签：选中 */
+.xj-btn-tag-selected {
+    margin-right:8px;
+    margin-bottom:12px;
+    min-width: 85px;
+    border-radius: 18px;
+    background-color: #f89337;
+    border-color: #f89337;
+    color:#fff;
+}
+
+.xj-btn-tag-selected:focus,
+.xj-btn-tag-selected:hover {
+    background-color: #f89337;
+    border-color: #f89337;
+    color:#fff;
+}
+
+/* 登陆页面验证码按钮 */
+.xj-btn-checknumber{
+    background-color: #dddddd;
+    border-color: #dddddd;
+    color: #000000;
+    border-radius: 0;
+}
+.xj-btn-checknumber:hover,
+.xj-btn-checknumber:focus {
+    background-color: #dddddd;
+    border-color: #dddddd;
+    color: #000000;
+}
+.xj-btn-checknumber[disabled],
+.xj-btn-checknumber[disabled]:focus,
+.xj-btn-checknumber[disabled]:hover {
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+    color: #999999;
+}
+/* 登陆按钮 */
+.xj-btn-submit{
+    margin:10px 0 10px;
+    border-radius: 0;
+    height: 50px;
+    font-weight:700;
+    font-size:20px;
+    background-color: #fd781b;
+    border-color: #fd781b;
+    color: #fff;
+}
+.xj-btn-submit:hover,
+.xj-btn-submit:focus {
+    background-color: #f95110;
+    border-color: #f95110;
+    color: #fff;
+}
+.xj-btn-submit[disabled],
+.xj-btn-submit[disabled]:focus,
+.xj-btn-submit[disabled]:hover {
+    background-color:#BBBBBB;
+    border-color: #BBBBBB;
+}
+
+/* 按钮：仿链接的样式 */
+.xj-btn-link{
+    border: 0;
+    background-color: #fff;
+    color: #fd781b;
+}
+.xj-btn-link:hover,
+.xj-btn-link:focus {
+}
+.xj-btn-link[disabled],
+.xj-btn-link[disabled]:focus,
+.xj-btn-link[disabled]:hover {
+    background-color:#BBBBBB;
+}
+.xj-btn-link span{
+    vertical-align: middle;
+    text-decoration:underline;
+}
+/* 按钮：导航样式 */
+.xj-btn-nav{
+     border: 0;
+     background-color: #FEF6A1;
+     color: #fd781b;
+     height:52px;
+     border-radius: 0;
+ }
+.xj-btn-nav:hover,
+.xj-btn-nav:focus {
+    background-color:#FEF6A1;
+    color: #fd781b;
+}
+.xj-btn-nav[disabled],
+.xj-btn-nav[disabled]:focus,
+.xj-btn-nav[disabled]:hover {
+    color:#666;
+}
+
+.xj-btn-nav:active{
+    -webkit-box-shadow:none;
+}
+.xj-btn-nav span{
+    vertical-align: middle;
+    text-decoration:none;
+}
+
+.xj-btn-nav2{
+    border: 0;
+    background-color: #FEF6A1;
+    color: #ccc;
+    height:52px;
+    border-radius: 0;
+}
+.xj-btn-nav2:hover,
+.xj-btn-nav2:focus {
+    background-color:#FEF6A1;
+    color: #ccc;
+}
+/* 按钮：弹出页面按钮样式 */
+.xj-btn-pop{
+    border-radius:18px;
+    border:1px;
+    border-color: #eeeeee;
+    background-color: #F4F4F4;
+    color: #233269;
+    height:35px;
+    padding:0px 15px 0px 8px;
+}
+.xj-btn-pop:hover,
+.xj-btn-pop:focus {
+    background-color:#dddddd;
+}
+.xj-btn-pop[disabled],
+.xj-btn-pop[disabled]:focus,
+.xj-btn-pop[disabled]:hover {
+}
+.xj-btn-pop span{
+    vertical-align: middle;
+    text-decoration:none;
+}
+
+.xj-btn-pop2{
+    border-radius:18px;
+    border:1px;
+    border-color: #eeeeee;
+    background-color: #f4f4f4;
+    color: #aaaaaa;
+    height:35px;
+    padding:0px 15px 0px 8px;
+}
+
+/* ------------------ 通用图片样式  - by kevin ---------------------- */
+/* 满格图片 */
+.xj-img-full {
+    width: 100%;
+    height: 100%;
+}
+/* 列表中头像图片1 */
+.xj-img-list-1 {
+    /*max-width: 100%;*/
+    max-width:50px;
+    min-width: 50px;
+    height:auto;
+}
+/* 列表中头像图片2 */
+.xj-img-list-2 {
+    max-width:65px;
+    min-width: 65px;
+    height:auto;
+}
+
+/* logo图片：菜单中 */
+.xj-img-logo-menu {
+    /*margin: 4px 0 ;*/
+    width: 40px;
+    height: 40px;
+    margin-top: -6px;
+    margin-bottom: 4px;
+}
+/* footer图片 */
+.xj-img-footer {
+    height: 65px;
+    width: auto;
+}
+/* 警告提示图片 */
+.xj-img-tips {
+    height: 75px;
+    width: auto;
+}
+/* 1号头像图片 */
+.xj-img-head-1 {
+    width: 140px;
+    height: auto;
+}
+/* 2号头像图片 */
+.xj-img-head-2 {
+    width: 100px;
+    height: auto;
+}
+/* 3号头像图片 */
+.xj-img-head-3 {
+    width: 80px;
+    height: auto;
+}
+/* 4号头像图片 */
+.xj-img-head-4 {
+    width: 75px;
+    height: auto;
+}
+/* 1号拨打电话图标 */
+.xj-img-callit-1{
+    width:65px;
+    height:auto;
+}
+/* 2号拨打电话图标 */
+.xj-img-callit-2 {
+    width:55px;
+    height:auto;
+}
+/* 3号拨打电话图标 */
+.xj-img-callit-3 {
+    width:30px;
+    height:auto;
+}
+/* 4号拨打电话图标 */
+.xj-img-callit-4 {
+    width:17px;
+    height:auto;
+}
+
+/* 1号香蕉币图标 */
+.xj-img-balance-1 {
+    width: 17px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 2号香蕉币图标 */
+.xj-img-balance-2 {
+    width: 14px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 3号香蕉币图标 */
+.xj-img-balance-3 {
+    width: 12px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 4号香蕉币图标 */
+.xj-img-balance-4 {
+    width: 9px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 1号评价图标 */
+.xj-img-star-1 {
+    width: 40px;
+    height: auto;
+    vertical-align: middle;
+    margin-left:5px;
+    margin-right:5px;
+}
+/* 2号评价图标 */
+.xj-img-star-2 {
+    width: 25px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 3号评价图标 */
+.xj-img-star-3 {
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+}
+/* 4号评价图标 */
+.xj-img-star-4 {
+    width: 15px;
+    height: auto;
+    margin-left:-2px;
+    vertical-align: middle;
+}
+/* 声望图标 */
+.xj-img-reputation {
+    width: auto;
+    height: 15px;
+    vertical-align: middle;
+}
+/* 图片：性别图标 */
+.xj-img-sex {
+    width: 25px;
+    height:auto;
+    padding-left: 10px;
+}
+/* 菜单中图标 */
+.xj-img-menu-icon {
+    width: 28px;
+    height: 28px;
+}
+/* 列表项图标:位于左边 */
+.xj-img-list-icon {
+    height: 22px;
+    width: auto;
+    padding-right: 10px;
+}
+/* 指向图标：向右 */
+.xj-img-point-right {
+    font-size: 20px;
+    color: #999999;
+}
+
+/* ------------------ 行区域样式 ---------------------- */
+/* 区域：默认样式 */
+.xj-row-default {
+    margin-top:0px !important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.xj-row-block-1 {
+    margin-top:0px !important;
+    padding-top:20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px !important;
+}
+.xj-row-block-2 {
+    margin-top:0px !important;
+    padding-top:10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px !important;
+}
+.xj-row-block-3 {
+    margin-top:0px !important;
+    padding-top:0px;
+    padding-bottom: 10px;
+    margin-bottom: 20px !important;
+}
+.xj-row-block-4 {
+    margin-top:0px !important;
+    padding-top:15px;
+    padding-bottom: 15px;
+    margin-bottom: 0px !important;
+}
+/* 区域：窄条区块 */
+.xj-row-block-5 {
+    margin-top:0px !important;
+    padding-top:8px;
+    padding-bottom: 8px;
+    margin-bottom: 0px !important;
+}
+/* 区域：窄条区块 - 顶部有预留 底部无空白预留 */
+.xj-row-block-6 {
+    margin-top:2px !important;
+    padding-top:8px;
+    padding-bottom: 8px;
+    margin-bottom: 0px !important;
+}
+/* 区域：页面第一部分 */
+.xj-row-block-7 {
+    margin-top:0px !important;
+    padding-top:20px;
+    padding-bottom: 0px;
+    margin-bottom: 0px !important;
+}
+/* 区域：独立页面 ex 备忘完成页 */
+.xj-row-block-8 {
+    margin-top:60px !important;
+    padding-top:20px;
+    padding-bottom: 0px;
+    margin-bottom: 60px !important;
+}
+/* 区域：通话记录切换 */
+.xj-row-block-9 {
+    height: 42px;
+    line-height: 42px;
+}
+/* 区域：通话记录切换 */
+.xj-row-block-10 {
+    margin-top:0px !important;
+    padding-top:10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px !important;
+}
+
+/* 区域：用于二级标题区域 */
+.xj-row-block-title {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    height:32px;
+}
+/* 区域：页面居中位置*/
+.xj-row-page-center {
+    margin-top:150px !important;
+    margin-bottom: 15px;
+}
+/* 区域：最小高度固定*/
+.xj-row-min-length {
+    min-height: 230px;
+}
+
+/* 区域：段落文字信息区块 */
+.xj-row-info {
+}
+/* 信息区域：分段 */
+.xj-row-info dl{
+    padding:0px 0px 20px 0px;
+    border-bottom: 1px solid #dddddd;
+}
+/* 信息区域：最后一个分段- 没有底线 */
+.xj-row-info dl.xj-dl-last{
+    padding:0px 0px 20px 0px;
+    border-bottom: 0px solid #dddddd;
+}
+/* 信息区域：标题 */
+.xj-row-info dl dt{
+    margin-bottom: 5px;
+}
+/* 信息区域：正文 */
+.xj-row-info dl dd{
+    line-height: 150%;
+}
+
+/* ------------------ 列表区域样式 ---------------------- */
+/* 默认列表子项样式 : 大功能列表 */
+.xj-list-item-default {
+    padding-top:20px !important;
+    padding-bottom:20px !important;
+    border-bottom:1px solid #dddddd;
+}
+/* 默认列表子项样式 : 大功能列表 - 虚线 */
+.xj-list-item-default-dotted {
+    padding-top:20px !important;
+    padding-bottom:20px !important;
+    border-bottom:1px dotted #dddddd;
+}
+/* 默认列表中最后一个子项 */
+.xj-list-item-default-last {
+    margin-bottom: 20px !important;
+}
+/* 较窄列表子项样式：充值页面 */
+.xj-list-item-normal {
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+    border-bottom:1px solid #dddddd;
+}
+/* 较窄列表子项样式：充值页面 - 虚线 */
+.xj-list-item-normal-dotted {
+    padding-top:5px !important;
+    padding-bottom:5px !important;
+    border-bottom:1px dotted #dddddd;
+}
+
+/* 列表项目加高样式*/
+.xj-list-item-lg{
+    line-height:80px;
+}
+.xj-list-item-lg img{
+    width:80px;
+    height:80px;
+}
+/* 列表项中分割横线：加高*/
+.xj-list-item-lg-hr{
+    border-top:10px #C5C5C5 solid;
+}
+
+/*----------------------通用表单元素-------------------------*/
+/* 登陆页面输入框 */
+.xj-input-login{
+    margin: 20px 0px 0px;
+    border-radius: 0;
+}
+.xj-input-login:focus {
+    border-color: #FEF6A1;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(254, 246, 161, 1);
+}
+/* 登陆页面验证码输入框 */
+.xj-input-checknumber {
+    border-radius: 0;
+}
+.xj-input-checknumber:focus {
+    border-color: #FEF6A1;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(254, 246, 161, 1);
+}
+
+/* 常用输入框*/
+.xj-input-normal,
+.xj-input-normal[readonly] {
+    border:0;
+    border-color: #efefef;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset;
+}
+.xj-input-normal:focus {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px #FEF6A1;
+}
+
+/* 文本框*/
+.xj-textarea-normal,
+.xj-textarea-normal[readonly] {
+    border:0;
+    border-color: #efefef;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset;
+    height: 280px !important;
+}
+.xj-textarea-normal:focus {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px #FEF6A1;
+}
+
+/*----------------表单按钮- 充值界面 by kevin-------------------*/
+/* 单选框 : 充值界面 */
+.xj-label-radio {
+    position: relative;
+}
+/* 单选按钮 */
+.xj-radio-default {
+    width: 19px;
+    height: 19px;
+}
+/* 单选按钮 : 附带文字 */
+.xj-txt-radio {
+    padding-left:10px;
+}
+/* 单选按钮 : 区域覆盖处理 */
+.xj-label-pull{
+    width: 85%;
+}
+/* 单选框：评分星星 */
+.xj-radio-star {
+    display: none;
+}
+.xj-label-star {
+    width: 40px;
+    height: 40px;
+    padding-left: 40px;
+    cursor: pointer;
+    color:#fff;
+    background: url(../img/star-1.png) no-repeat 0px 0px;
+}
+.xj-label-star-sel {
+    background: url(../img/star-1.png) no-repeat 0px 0px;
+}
+.xj-label-star-nosel {
+    background: url(../img/star-1.png) no-repeat 0px -40px;
+}
+
+/* ------------------ 评分星星样式 ---------------------- */
+.xj-star-1 {
+}
+.xj-star-1 a {
+    background: url(../img/star-1.png) no-repeat 0px 0px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    text-indent: -999em;
+    vertical-align: middle;
+}
+.xj-star-sel-1 {
+    background-position: 0px 0px !important;
+}
+.xj-star-nosel-1 {
+    background-position: 0px -40px !important;
+}
+.xj-star-2 {
+}
+.xj-star-2 a {
+    background: url(../img/star-2.png) no-repeat 0px 0px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    text-indent: -999em;
+    vertical-align: middle;
+}
+.xj-star-sel-2 {
+    background-position: 0px 0px !important;
+}
+.xj-star-nosel-2 {
+    background-position: 0px -24px !important;
+}
+.xj-star-3 {
+}
+.xj-star-3 a {
+    background: url(../img/star-3.png) no-repeat 0px 0px;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    text-indent: -999em;
+    vertical-align: middle;
+}
+.xj-star-sel-3 {
+    background-position: 0px 0px !important;
+}
+.xj-star-nosel-3 {
+    background-position: 0px -15px !important;
+}
+
+/*-------------------模态框------------------------*/
+/* 模式弹出框：退出登录窗口 */
+.xj-modal-dialog-default {
+    margin-top:100px;
+}
+.xj-modal-header-default {
+    border-bottom: 0px;
+}
+.xj-modal-content-default {
+    border-radius: 0px;
+}
+.xj-modal-body-default {
+    text-align: center !important;
+    font-weight:800;
+    font-size: 16px;
+}
+.xj-modal-body-default p {
+    margin-bottom: 0px;
+}
+.xj-modal-footer-default {
+    border-top: 0px;
+    text-align: center !important;
+}
+/* 模式弹出框：长篇幅页面 */
+.xj-modal-dialog-long {
+    margin-top:20px;
+}
+.xj-modal-header-long {
+    border-bottom: 0px;
+    background-color:#FEF6A1;
+    color:#F89337;
+}
+.xj-modal-body-long {
+    text-align: left !important;
+    font-weight:500;
+    font-size: 16px;
+}
+
+/*----------------导航栏 - by jianzhi-------------------*/
+/* 用途：导航条用于顶部固定 - 菜单的高度设定 */
+.xj-showheader-true{
+    padding-top: 50px;
+}
+/* 3级页面导航 */
+.xj-navbar {
+    font-size: 20px;
+    line-height: 50px;
+    color: #f89337;
+}
+
+/* ----BEGIN：按钮下拉导航内容----- */
+/* 按钮下拉导航按钮 */
+.xj-narbar-toggle {
+    border: 0;
+    margin-right: 0;
+    padding: 9px 10px 9px 10px;  /*若设置右边=0以便右边对齐边线*/
+}
+/*覆盖bootstrap默认的样式*/
+button.navbar-style span {
+    background-color: #DD882E!important;
+}
+button.navbar-style:hover {
+    background-color: #fff !important;
+}
+button.navbar-style:visited,
+button.navbar-style:focus,
+button.navbar-style:hover {
+    border: 0px solid transparent;
+    border-radius: 0px;
+    background-color: transparent !important;
+}
+
+#index-navbar-collapse .navbar-nav > li  {
+    height:51px;
+}
+#index-navbar-collapse .navbar-nav > li > a {
+    padding-top: 11px;
+    padding-bottom: 10px;
+}
+#index-navbar-collapse2 .navbar-nav > li  {
+    height:51px;
+}
+#index-navbar-collapse2 .navbar-nav > li > a {
+    padding-top: 11px;
+    padding-bottom: 0px;
+}
+#index-navbar-collapse ul li {
+    background-color:#FFF;
+}
+#index-navbar-collapse2 ul li {
+    background-color:#FFF6A1;
+}
+#index-navbar-collapse {
+    border-top: 0px solid transparent;
+}
+#index-navbar-collapse2 {
+    border-top: 0px solid transparent;
+}
+#index-navbar-collapse ul li a  {
+    color: #000;
+}
+#index-navbar-collapse2 ul li a  {
+    color: #000;
+}
+#index-navbar-collapse ul li:hover {
+    background-color:#FFF6A1;
+    color:#FD7B1B;
+}
+#index-navbar-collapse ul li:hover {
+    color:#FD7B1B!important;
+}
+
+#index-navbar-collapse ul li img {
+    margin-right: 15px;
+}
+#index-navbar-collapse2 ul li:hover {
+    background-color:#FFF;
+    color:#FD7B1B;
+}
+#index-navbar-collapse2 ul li:hover {
+    color:#FD7B1B!important;
+}
+#index-navbar-collapse2 ul li img {
+    margin-right: 15px;
+}
+/* ----END：按钮下拉导航内容----- */
+
+/*修复nav回上一页图标点击区域大小*/
+.xj-big-area{
+    width: 40px;
+    height: 40px;
+}
+
+/*修复按钮太小导致点击区域过小*/
+.xj-close{
+    width: 40px;
+    height: 40px;
+}
+/*让type=number中的上下箭头去掉*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/*公共textarea样式*/
+.xj-com-textarea{
+    width: 100%;
+    height: 80px;
+    border: 1px solid #fd781b;
+    resize: none;
+    padding: 10px;
+}
+/*公共底部固定定位*/
+.xj-bottom-fixed{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+}

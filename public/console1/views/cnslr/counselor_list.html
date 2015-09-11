@@ -1,0 +1,435 @@
+<div ui-content-for="title">
+	<span>咨询师管理</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-turn-on="cnslrForm" ng-click="add()" xx-permission="p_post_counselor">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_counselor">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<form name="filterForm" ng-submit="reload()">
+		<fieldset>
+			<div class="form-group">
+				<label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="昵称/手机号/姓名">
+			</div>
+		</fieldset>
+        <fieldset>
+			<div class="form-group">
+				<label>在线状态</label>
+                <ul class="list-group">
+				    <li class="list-group-item" ng-click="set_state('on')">在线<i ng-show="state1" class="fa fa-check pull-right text-primary"></i></li>
+                    <li class="list-group-item" ng-click="set_state('off')">离线<i ng-show="state2" class="fa fa-check pull-right text-primary"></i></li>
+				</ul>
+			</div>
+		</fieldset>
+		<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+	</form>
+</div>
+<div class="scrollable">
+	<div class="scrollable-header section">
+		<div class="panel panel-title panel-primary">
+			<div class="panel-heading">
+				<div class="row xj-margin0">
+                    <div class="col-xs-3 xj-padding0 text-left">编号</div>
+					<div class="col-xs-3 xj-padding0 text-left">昵称</div>
+					<div class="col-xs-3 xj-padding0 text-center">手机号</div>
+					<div class="col-xs-3 xj-padding0 text-center">状态</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scrollable-content section" ui-scroll-bottom="page.next()">
+		<div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0">
+			<span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+		</div>
+		<div class="panel-group" ng-show="page.elements.length>0">
+			<div class="panel panel-default" ng-repeat="e in page.elements">
+				<div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+					<div class="row xj-margin0">
+                        <div class="col-xs-2 text-left xj-padding0">
+							<span>{{e.id}}</span>
+						</div>
+						<div class="col-xs-1 xj-padding0 text-left">
+							<span ng-if="e.online" class="label label-success">on</span> <span ng-if="!e.online" class="label label-default"><i>off</i></span>
+						</div>
+						<div class="col-xs-3 text-left xj-div-gender">
+							<i class="fa fa-male text-primary" ng-if="e.user.gender=='MALE'"></i> <i class="fa fa-female text-danger" ng-if="e.user.gender=='FEMALE'"></i>{{e.user.nickName}}
+						</div>
+						<div class="col-xs-3 text-center xj-padding0">
+							<span>{{e.user.mobile}}</span>
+						</div>
+						<div class="col-xs-3 xj-padding0 text-center">
+							<span>{{cnslrStateMap[e.state]}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body" ng-show="selected==$index">
+					<table class="table table-striped">
+						<tr>
+							<td><strong>姓名：</strong></td>
+							<td><span>{{e.realName}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>身份证号：</strong></td>
+							<td><span>{{e.idCardNo}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>职业资质等级：</strong></td>
+							<td><span>{{laborClassMap[e.laborClass]}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>职业资质编号：</strong></td>
+							<td><span>{{e.licenseNo}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>咨询风格：</strong></td>
+							<td><span>{{cnslrStyleMap[e.style]}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>个性语录：</strong></td>
+							<td><span>{{e.slogan}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>个人简介：</strong></td>
+							<td><span ng-bind-html="e.brief"></span></td>
+						</tr>
+                        <tr>
+							<td><strong>擅长领域：</strong></td>
+                            <td><span ng-repeat="skill in e.skills"><span ng-if="$last">{{skill.name}}</span><span ng-if="!$last">{{skill.name}}、</span></span>
+                            </td>
+						</tr>
+						<tr>
+							<td><strong>每分钟单价：</strong></td>
+							<td><i class="fa fa-rmb">{{e.dialUnitPrice|number:2}}</i></td>
+						</tr>
+						<tr>
+							<td><strong>提现账户余额：</strong></td>
+							<td><i class="fa fa-rmb">{{e.account|number:2}}</i></td>
+						</tr>
+						<tr>
+							<td><strong>支付宝账号：</strong></td>
+							<td><span>{{e.alipayAccount}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>支付宝姓名：</strong></td>
+							<td><span>{{e.alipayName}}</span></td>
+						</tr>
+						<tr>
+							<td><strong>所属咨询机构：</strong></td>
+							<td><span>{{e.institution.name}}</span></td>
+						</tr>
+                        <tr>
+							<td><strong>声望：</strong></td>
+							<td><span>{{e.reputation}}</span></td>
+						</tr>
+					</table>
+					<div class="row">
+						<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+							<button class="btn btn-primary" ui-turn-on="cnslrForm" ng-click="modify(e)" xx-permission="p_put_counselor">修改资料</button>
+						</div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="photoUpload" ng-click="initUploadPhoto(e)" xx-permission="p_put_counselor_photo">上传照片</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+							<button class="btn btn-primary" ng-click="switchOnlineState(e)" xx-permission="p_put_counselor_online">在线切换</button>
+						</div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ng-click="viewOnlineInfo(e)" xx-permission="p_get_counselor_online_history">上下线历史</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button" ng-show="e.state!='CANCELLED'">
+                            <button class="btn btn-primary" ng-click="switchCancelled(e)" xx-permission="p_put_counselor_state">注销咨询师</button>
+                        </div>
+						<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 xj-div-button">
+							<button class="btn btn-primary" ng-click="modifyMobileNumber(e)" ui-turn-on="modifyMobileNum">修改电话号码</button>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 xj-div-button">
+							<button class="btn btn-primary" ng-click="setWorkTime(e)" ui-turn-on="setWorkTime">设置工作时段</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+		<span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+	</button>
+</div>
+
+<div ui-content-for="modals">
+	<div class="modal modal-overlay scrollable" ui-if="modifyMobileNum" ui-state="modifyMobileNum">
+		<div class="scrollable-header">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" ui-turn-off="modifyMobileNum"></button>
+						<h4 class="modal-title">{{modalTitle}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="col-xs-12">
+							<h4>原始手机号：{{counselorMobileOld}}</h4>
+						</div>
+						<form name="modifyMobileNum" ng-submit="saveMobileNum()" novalidate>
+							<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':modifyMobileNum.num.$invalid && !modifyMobileNum.num.$pristine}">
+								<span class="text-danger">*</span> <label>原始手机号码</label> <input type="tel" class="form-control" name="mobile_Old" ng-model="mobile.Old" placeholder="原始手机号码" required ng-maxlength="11"/>
+							</div>
+							<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':modifyMobileNum.num.$invalid && !modifyMobileNum.num.$pristine}">
+								<span class="text-danger">*</span> <label>新手机号码</label> <input type="tel" class="form-control" name="mobile_New" ng-model="mobile.New" placeholder="新手机号码" required ng-maxlength="11"/>
+							</div>
+							<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+								<div class="col-xs-6">
+									<button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="modifyMobileNum.$invalid||isLoading">保存</button>
+								</div>
+								<div class="col-xs-6">
+									<button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="modifyMobileNum" ng-disabled="isLoading" ng-click="reload()">取消</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal modal-overlay scrollable" ui-if="photoUpload" ui-state="photoUpload">
+		<div class="scrollable-header">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">&times;</button>
+						<h4 class="modal-title">{{modalTitle}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<h4>咨询师当前照片</h4>
+								<img id="photo_old" class="center-block" style="max-width: 640px; height: auto;" src="{{oldPhoto}}" alt="暂无照片" />
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<h4>新上传照片</h4>
+								<img id="photo_preview" class="center-block" ngf-src="photoFile" style="max-width: 640; height: auto;" ngf-default-src="img/cnslr_photo_placeholder.jpg" />
+								<div class="progress" ng-show="uploadPercentage!=null">
+									<div class="progress-bar progress-bar-success" style="min-width: 2em;width: {{uploadPercentage}}%;">{{uploadPercentage}}%</div>
+								</div>
+								<br />
+								<button class="btn btn-primary btn-lg btn-block" ng-disabled="isLoading||uploadPercentage!=null" ngf-select ngf-change="selectPhoto($files)" accept="image/jpeg">选择图片</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-footer">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-footer">
+						<div class="col-xs-6 col-md-offset-2 col-md-4">
+							<button class="btn btn-primary btn-lg btn-block" ng-click="uploadPhoto()" ng-disabled="photoFile==null||isLoading||uploadPercentage!=null">上传</button>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<button class="btn btn-default btn-lg btn-block" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal modal-overlay scrollable" ui-if="cnslrForm" ui-state="cnslrForm">
+		<div class="scrollable-header">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" ui-turn-off="cnslrForm" ng-disabled="isLoading" ng-click="reload()">&times;</button>
+						<h4 class="modal-title">{{modalTitle}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body" stop-event="touchend">
+						<form name="cnslrForm" ng-submit="saveCnslr()" novalidate>
+							<div class="row">
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':cnslrForm.mobile.$invalid && !cnslrForm.mobile.$pristine}" ng-if="counselor.id==null">
+									<span class="text-danger">*</span> <label>手机号码</label> <span class="text-info">(11位数字，确保唯一)</span> <input type="number" class="form-control" name="mobile" ng-model="counselor.user.mobile" placeholder="咨询师用于登录和接听电话的手机号码" required ng-minlength="11" ng-maxlength="11" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':cnslrForm.nickName.$invalid && !cnslrForm.nickName.$pristine}">
+									<span class="text-danger">*</span> <label>昵称</label> <input type="text" class="form-control" name="nickName" ng-model="counselor.user.nickName" placeholder="平台显示的昵称，不是咨询师的真名" required ng-maxlength="12" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<div class="row">
+										<div class="col-xs-4 col-md-2">
+											<span class="text-danger">*</span> <label>性别：</label>
+										</div>
+										<div class="col-xs-8 col-md-10">
+											<span> <label class="radio-inline"> <input name="gender" type="radio" value="MALE" ng-model="counselor.user.gender" required>男
+											</label> <label class="radio-inline"> <input name="gender" type="radio" value="FEMALE" ng-model="counselor.user.gender">女
+											</label>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.realName.$invalid && !cnslrForm.realName.$pristine }">
+									<span class="text-danger">*</span> <label>姓名</label> <input type="text" class="form-control" name="realName" ng-model="counselor.realName" placeholder="请输入咨询师的姓名" required ng-pattern="/^[\u4E00-\u9FA5]{1,6}$/" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.idCardNo.$invalid && !cnslrForm.idCardNo.$pristine }">
+									<span class="text-danger">*</span> <label>身份证号</label> <span class="text-info">(18位，确保唯一)</span> <input type="text" class="form-control" name="idCardNo" ng-model="counselor.idCardNo" placeholder="请输入咨询师的身份证号" required ng-pattern="/^[1-9]\d{5}[1-2]\d{3}((0[1-9])|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[\dx]$/" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<div class="row xj-margin0">
+										<div class="col-xs-4 col-md-2 xj-padding0">
+											<span class="text-danger">*</span> <label>职业等级：</label>
+										</div>
+										<div class="col-xs-8 col-md-10 xj-padding0">
+											<span> <label class="radio-inline"> <input name="level" type="radio" value="FIRST" ng-model="counselor.laborClass" required>一级
+											</label> <label class="radio-inline"> <input name="level" type="radio" value="SECOND" ng-model="counselor.laborClass" required>二级
+											</label> <label class="radio-inline"> <input name="level" type="radio" value="THIRD" ng-model="counselor.laborClass">三级
+											</label>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.licenseNo.$invalid && !cnslrForm.licenseNo.$pristine }">
+									<span class="text-danger">*</span> <label>职业等级证书编号</label> <span class="text-info">(16位)</span> <input type="text" class="form-control" name="licenseNo" ng-model="counselor.licenseNo" placeholder="请输入职业等级证书编号" required ng-pattern="/^\d{16}$/" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<div class="row xj-margin0">
+										<div class="col-xs-4 col-md-2 xj-padding0">
+											<span class="text-danger">*</span> <label>咨询风格：</label>
+										</div>
+										<div class="col-xs-8 col-md-10 xj-padding0">
+											<span> <label class="radio-inline xj-label-narrow"><input type="radio" name="style" value="CALM" ng-model="counselor.style" required>冷静型</label> <label class="radio-inline xj-label-narrow"><input type="radio" name="style" value="HEALING" ng-model="counselor.style">疗愈型</label> <label
+												class="radio-inline xj-label-narrow"><input type="radio" name="style" value="PUNGENT" ng-model="counselor.style">麻辣型</label>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<span class="text-danger">*</span><label>擅长领域</label>
+									<ul class="list-group">
+										<li class="list-group-item" ng-repeat="s in skills" ng-click="selectSkill(s)">{{s.name}}<i ng-show="input_skills[s.id]" class="fa fa-check pull-right text-primary"></i>
+										</li>
+									</ul>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.slogan.$invalid && !cnslrForm.slogan.$pristine }">
+									<span class="text-danger">*</span> <label>个性语录</label> <span class="text-info">(最长255字)</span> <input type="text" class="form-control" name="slogan" ng-model="counselor.slogan" placeholder="咨询师的生活看法，吸引客户产生共鸣进而咨询" required ng-maxlength="255" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.dialUnitPrice.$invalid && !cnslrForm.dialUnitPrice.$pristine }">
+									<span class="text-danger">*</span> <label>每分钟收费</label> <span class="text-info">(0.01元~100元)</span>
+									<div class="input-group">
+										<input type="number" data-max="100" data-min="0.01" class="form-control" name="dialUnitPrice" ng-model="counselor.dialUnitPrice" placeholder="每分钟所收费用，建议为1元" required ng-pattern="/^(([1-9]{1}\d*)|([0]{1}))(\.\d{1,2})?$/" /> <span class="input-group-addon">元</span>
+									</div>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.brief.$invalid && !cnslrForm.brief.$pristine }">
+									<label>个人简介</label> <span class="text-info">(选填)</span>
+									<div text-angular="text-angular" name="brief" ng-model="counselor.brief"></div>
+									<!--<textarea class="form-control" rows="5" name="brief" ng-model="counselor.brief" placeholder="过往经历、教育、从业经历、获得的荣誉等" ng-maxlength="2048"></textarea>-->
+									<textarea style="display: none" ng-model="counselor.brief" style="width: 100%" ng-maxlength="2048"></textarea>
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.alipayAccount.$invalid && !cnslrForm.alipayAccount.$pristine }">
+									<label>支付宝账号</label> <span class="text-info">(选填，5-64个字符。如果填了支付宝账号，必须也填写支付宝姓名)</span> <input type="text" class="form-control" name="alipayAccount" ng-model="counselor.alipayAccount" placeholder="请输入咨询师的支付宝账号" ng-minlength="5" ng-maxlength="64" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.alipayName.$invalid && !cnslrForm.alipayName.$pristine }">
+									<label>支付宝姓名</label> <span class="text-info">(选填，中文2-64个字符。如果填了支付宝姓名，必须也填写支付宝账号)</span> <input type="text" class="form-control" name="alipayName" ng-model="counselor.alipayName" placeholder="请输入支付宝显示的姓名" ng-pattern="/^[\u4E00-\u9FA5]{2,64}$/" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<label>所属咨询机构</label> <span class="text-info">(选填,只能选择搜索中的机构,不能手动填写)</span>
+									<div angucomplete-alt id="ex1" placeholder="请输入关键字" pause="400" selected-object="selectedProjectFn" initial-value="selectedProject" remote-url="/server/console/partner/institution?keyword=" remote-url-data-field="payload.content" search-fields="name" title-field="name" minlength="1" input-class="form-control form-control-small"
+										 match-class="highlight"></div>
+								</div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':cnslrForm.reputation.$invalid && !cnslrForm.reputation.$pristine }">
+									<span class="text-danger">*</span> <label>声望</label> <span class="text-info">(必填，大于等于0的整数)</span> <input type="number" class="form-control" name="reputation" ng-model="counselor.reputation" placeholder="请填入咨询师声望" required ng-pattern="/^(0|[1-9]{1}[0-9]*)$/" />
+								</div>
+								<div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+									<div class="col-xs-6">
+										<button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="cnslrForm.$invalid||isLoading">保存</button>
+									</div>
+									<div class="col-xs-6">
+										<button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="cnslrForm" ng-disabled="isLoading"
+                                                ng-click="reload()">取消</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-overlay scrollable" ui-if="setWorkTime" ui-state="setWorkTime">
+		<div class="scrollable-header">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" ui-turn-off="setWorkTime" ng-disabled="isLoading" ng-click="reload()">&times;</button>
+						<h4 class="modal-title">{{modalTitle}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body" stop-event="touchend">
+
+						<ul class="nav nav-tabs">
+							<li ng-class="{'active':selectedDay == 1}" ng-click="switchDay(1)"><a >周一</a></li>
+							<li ng-class="{'active':selectedDay == 2}" ng-click="switchDay(2)"><a >周二</a></li>
+							<li ng-class="{'active':selectedDay == 3}" ng-click="switchDay(3)"><a class="xj-txt-3 xj-txt-color-5">周三</a></li>
+							<li ng-class="{'active':selectedDay == 4}" ng-click="switchDay(4)"><a class="xj-txt-3 xj-txt-color-5">周四</a></li>
+							<li ng-class="{'active':selectedDay == 5}" ng-click="switchDay(5)"><a class="xj-txt-3 xj-txt-color-5">周五</a></li>
+							<li ng-class="{'active':selectedDay == 6}" ng-click="switchDay(6)"><a class="xj-txt-3 xj-txt-color-5">周六</a></li>
+							<li ng-class="{'active':selectedDay == 0}" ng-click="switchDay(0)"><a class="xj-txt-3 xj-txt-color-5">周日</a></li>
+						</ul>
+						<div class="tab-pane fade in active xj-row-min-length">
+							<div class="container-fluid xj-txt-2 xj-word-wrap">
+								<div class="row xj-list-item-default">
+									<div class="col-xs-12 text-left">
+										<span class="col-xs-4 xj-padding0" style="font-size: 14px;">选择工作时间</span>
+									</div>
+								</div>
+								<div class="form-group row xj-list-item-default">
+									<ul class="col-xs-6 col-sm-4 col-md-3 col-lg-2 list-group" ng-repeat="h in hoursOfCurrentDay track by $index">
+										<!--<a class="btn btn-sm btn-block xj-txt-4 xj-btn-selected" ng-class="{true:'xj-btn-tag-selected',false:'xj-btn-tag-noselected'}[h]" ng-click="hoursOfCurrentDay[$index]=!hoursOfCurrentDay[$index]">{{$index}}:00 - {{$index+1}}:00</a>-->
+										<li class="list-group-item" ng-class="{true:'xj-btn-tag-selected',false:'xj-btn-tag-noselected'}[h]" ng-click="hoursOfCurrentDay[$index]=!hoursOfCurrentDay[$index]">{{$index}}:00 - {{$index+1}}:00<i class="fa fa-check pull-right text-primary"></i></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="scrollable-footer">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-footer">
+						<div class="col-xs-6 col-md-offset-2 col-md-4">
+							<button class="btn btn-primary btn-lg btn-block" ng-click="submit()">保存</button>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<button class="btn btn-default btn-lg btn-block" ui-turn-off="setWorkTime">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

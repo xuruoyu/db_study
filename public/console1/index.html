@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>心情香蕉管理平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <base href="/console/" />
+
+    <link rel="stylesheet" href="/common/style/mobile-angular-ui-base.min.css" />
+    <link rel="stylesheet" href="/common/style/mobile-angular-ui-hover.min.css" />
+    <link rel="stylesheet" href="/common/style/mobile-angular-ui-desktop.min.css" />
+    <link rel="stylesheet" href="/common/style/angular-chart.css">
+    <link rel="stylesheet" href="/common/style/font-awesome.min.css">
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <script src="/common/lib/angular.min.js"></script>
+    <script src="/common/lib/angular-route.min.js"></script>
+    <script src="/common/lib/angular-touch.min.js"></script>
+    <script src="/common/lib/mobile-angular-ui.min.js"></script>
+	<script src="/common/lib/ng-file-upload.min.js"></script>
+	<script src="/common/lib/Chart.min.js"></script>
+	<script src="/common/lib/angular-chart.min.js"></script>
+    <script src="/common/lib/cookie.min.js"></script>
+    <script src='/common/lib/textAngular-sanitize.min.js'></script>
+    <script src="/common/lib/textAngular.min.js"></script>
+    <script src="/common/js/services.js"></script>
+    <script src="/common/js/filter.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="/common/lib/angucomplete-alt.js"></script>
+</head>
+
+<body ng-app="xjConsoleApp" ng-controller="MainCtrl">
+	<div class="sidebar sidebar-left">
+		<div class="scrollable">
+			<h1 class="scrollable-header app-name">
+				心情香蕉<small>管理平台</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li>导航中心</li>
+				<li ng-show="navLocation=='cnslr'">咨询师管理</li>
+				<li ng-show="navLocation=='system'">系统管理</li>
+                <li ng-show="navLocation=='consult'">咨询记录查询</li>
+                <li ng-show="navLocation=='user'">用户管理</li>
+                <li ng-show="navLocation=='stat'">统计分析</li>
+			</ol>
+			<div class="scrollable-content" ng-init="navLocation='top'">
+				<div class="list-group" ng-show="navLocation=='top'">
+					<a class="list-group-item" href="/console" ui-turn-off="uiSidebarLeft">首页
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" ng-click="navLocation='cnslr'">咨询师管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" ng-click="navLocation='user'">用户管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/consult/consult_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_consult_record">咨询记录查询
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/coupon/coupon_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_cash_coupon_sales">代金券管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" ng-click="navLocation='stat'">统计分析
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a ng-show="isStaffLogin" class="list-group-item" href="/console/change_password" ui-turn-off="uiSidebarLeft">修改密码
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" ng-click="navLocation='system'">系統管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+				</div>
+				<div class="list-group" ng-show="navLocation=='cnslr'">
+					<a class="list-group-item text-center" ng-click="navLocation='top'" href="#">返回
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/cnslr/counselor_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_counselor">咨询师列表
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/cnslr/counselor_online_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_counselor_online_history">咨询师上下线
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/cnslr/counselor_apply_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_counselor_apply">申请审批
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/cnslr/withdraw_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_counselor_account_flow">提现管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/consult_organization/consult_organization_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_institution">咨询机构列表
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/cnslr/counselor_handnote" ui-turn-off="uiSidebarLeft" xx-permission="p_get_note">咨询手记管理
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+				</div>
+                <div class="list-group" ng-show="navLocation=='user'">
+                    <a class="list-group-item text-center" ng-click="navLocation='top'" href="#">返回
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/user/user_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_staff">用户列表
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/user/user_organzation" ui-turn-off="uiSidebarLeft" xx-permission="p_get_role">用户组织
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                </div>
+				<div class="list-group" ng-show="navLocation=='system'">
+					<a class="list-group-item text-center" ng-click="navLocation='top'" href="#">返回
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/sys/staff_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_staff">员工列表
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/sys/role_list" ui-turn-off="uiSidebarLeft" xx-permission="p_get_role">角色列表
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/consult/OperationRrecords" ui-turn-off="uiSidebarLeft" xx-permission="p_get_op_log">查询操作记录
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+				</div>
+				<div class="list-group" ng-show="navLocation=='stat'">
+					<a class="list-group-item text-center" ng-click="navLocation='top'" href="#">返回
+                        <i class="fa fa-chevron-up pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/stat/user_count" ui-turn-off="uiSidebarLeft" xx-permission="p_get_user_total">用户数统计
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/stat/user_bill" ui-turn-off="uiSidebarLeft" xx-permission="p_get_user_balance_flow">用户账单统计
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/stat/user_duration" ui-turn-off="uiSidebarLeft" xx-permission="p_get_session_time">通话时长统计
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                    <a class="list-group-item" href="/console/stat/user_time" ui-turn-off="uiSidebarLeft" xx-permission="p_get_session_count">通话次数统计
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+				</div>
+			</div>
+			<button class="btn btn-danger btn-block scrollable-footer" ng-show="isStaffLogin" ng-click="logout()">退出登录</button>
+		</div>
+	</div>
+	<div class="sidebar sidebar-right">
+		<div class="scrollable">
+			<div class="scrollable-content section" ui-yield-to="sidebarRight"></div>
+		</div>
+	</div>
+	<div class="app" ng-swipe-right="Ui.turnOn('uiSidebarLeft')" ng-swipe-left="Ui.turnOff('uiSidebarLeft')">
+		<div class="navbar navbar-app navbar-absolute-top">
+			<div class="navbar-brand navbar-brand-center" ui-yield-to="title">运动比赛管理平台</div>
+			<div class="btn-group pull-left">
+				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+					<i class="fa fa-bars"></i>菜单
+				</div>
+			</div>
+			<div class="btn-group pull-right" ui-yield-to="navbarRight"></div>
+		</div>
+		<div class="app-body">
+			<div class="app-content">
+				<ng-view />
+			</div>
+		</div>
+	</div>
+	<div ui-yield-to="modals"></div>
+</body>
+</html>

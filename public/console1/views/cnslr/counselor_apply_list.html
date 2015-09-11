@@ -1,0 +1,206 @@
+<div ui-content-for="title">
+	<span>咨询师审核管理</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_counselor_apply">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<form name="filterForm" ng-submit="reload()">
+		<fieldset>
+			<div class="form-group">
+				<label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="昵称/手机号/姓名">
+			</div>
+			<div class="form-group">
+				<label>审核状态</label>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-model="input_states.SUBMITTED">已提交申请</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-model="input_states.ACCEPTED">审核通过</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-model="input_states.REJECTED">审核不通过</label>
+				</div>
+			</div>
+		</fieldset>
+		<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+	</form>
+</div>
+<div class="scrollable">
+	<div class="scrollable-header section">
+		<div class="panel panel-title panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3 test-center">姓名</div>
+					<div class="col-xs-3 test-center">手机号</div>
+					<div class="col-xs-3 test-center">状态</div>
+                    <div class="col-xs-3 test-center">类型</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scrollable-content section" ui-scroll-bottom="page.next()">
+		<div class="text-center fa-5x vertical-center text-primary" ng-show="page.elements.length==0">
+			<span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+		</div>
+		<div class="panel-group" ng-show="page.elements.length>0">
+			<div class="panel panel-default" ng-repeat="e in page.elements">
+				<div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+					<div class="row">
+						<div class="col-xs-3 text-left">
+							<i class="fa fa-male text-primary" ng-if="e.user.gender=='MALE'"></i> <i class="fa fa-female text-danger" ng-if="e.user.gender=='FEMALE'"></i>{{e.realName}}
+						</div>
+						<div class="col-xs-3 text-left">
+                            <span>{{e.user.mobile}}</span>
+                        </div>
+						<div class="col-xs-3 text-left">
+							<span>{{stateMap[e.state]}}</span>
+						</div>
+                        <div class="col-xs-3 text-left">
+							<span>{{typeMap[e.type]}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body" ng-show="selected==$index">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>
+                                <strong>申请编号：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.id}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>昵称：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.user.nickName}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>每分钟单价：</strong>
+                            </td>
+                            <td>
+                                <i class="fa fa-rmb">{{e.dialUnitPrice|number:2}}</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>职业资质等级：</strong>
+                            </td>
+                            <td>
+                                <span>{{laborClassMap[e.laborClass]}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>职业资质编号：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.licenseNo}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>咨询风格：</strong>
+                            </td>
+                            <td>
+                                <span>{{cnslrStyleMap[e.style]}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>所属咨询机构：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.institution}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>个人语录：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.slogan}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>个人简介：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.brief}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>擅长领域：</strong>
+                            </td>
+                            <td>
+                                <span ng-repeat="skill in e.skills"><span ng-if="$last">{{skill.name}}</span><span ng-if="!$last">{{skill.name}}、</span></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>QQ：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.qq}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>介绍人：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.introducer}}</span>
+                            </td>
+                        </tr>
+                    </table>
+					<div class="row">
+						<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+							<button class="btn btn-success" ng-show="e.state=='SUBMITTED'" ng-click="accept(e)" xx-perimission="p_put_counselor_apply">审核通过</button>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+							<button class="btn btn-danger" ng-show="e.state=='SUBMITTED'"  ui-turn-on="unSuccessModal" xx-perimission="p_put_counselor_apply" ng-click="set_id(e)">审核不通过</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+		<span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+	</button>
+</div>
+
+<div ui-content-for="modals">
+    <div class="modal" ui-if="unSuccessModal" ui-state="unSuccessModal">
+        <div class="modal-backdrop in"></div>
+        <form name="cnslr_apply" ng-submit="refuse(reject_reason)" novalidate>
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button class="close" ui-turn-off="unSuccessModal">&times;</button>
+                       <h4 class="modal-title">请填写审核不通过理由(4-32个字符)</h4>
+                   </div>
+                   <div class="modal-body" ng-class="{ 'has-error':cnslr_apply.reason.$invalid && !cnslr_apply.reason.$pristine }">
+                       <label>理由</label>
+                       <textarea type="text" class="form-control" name="reason" ng-model="reject_reason" placeholder="填写理由" ng-minlength="4" ng-maxlength="32" required></textarea>
+                   </div>
+                   <div class="modal-footer text-center">
+                       <button type="submit" class="btn btn-primary" ui-turn-off="unSuccessModal" ng-disabled="cnslr_apply.$invalid||isLoading" ng-click="refuse(reject_reason)">确认</button>
+                       <button type="reset" class="btn btn-default" ui-turn-off="unSuccessModal" ng-disabled="isLoading">取消</button>
+                   </div>
+               </div>
+           </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+/*---------------------------------------------------*/
+/* ------------------ 绠＄悊鍚庡彴鏍峰紡 ---------------------- */
+/*---------------------------------------------------*/
+
+/* ---------------- 閫氱敤甯冨眬鏍峰紡 - by kevin ---------------- */
+/* 鐢ㄤ簬娓呴櫎container-fluid 榛樿杈硅窛 */
+.xj-padding0 {
+    padding:0px 0px !important;
+}
+/* 鐢ㄤ簬娓呴櫎row 榛樿杈硅窛 */
+.xj-margin0 {
+    margin:0px 0px !important;
+}
+/* 鍨傜洿灞呬腑 : refresh鎸夐挳 */
+.xj-vertical-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* 鏍囩閫夐」 */
+.xj-label-narrow {
+    margin-left: 2px !important;
+}
+/* 鎬у埆鍥炬爣鍖哄煙 */
+.xj-div-gender {
+    padding: 0 0 0 10px;
+}
+/* 鎸夐挳鎵�湪鐨勫尯鍩�*/
+.xj-div-button {
+    margin-bottom: 10px;
+}
+
+/* 甯︾姸琛ㄦ牸鍒�*/
+.table-striped tr td {
+    min-width: 100px;
+}
+
+/*琛ㄦ牸涓婁笅杈硅窛*/
+.table-block-pad{
+    padding: 10px 0 20px 0;
+}
+
+/*autocomplete*/
+.angucomplete-holder {
+    position: relative;
+}
+
+.angucomplete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    width: 250px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    /*top: 32px;
+    left: 0px;
+    */
+    margin-top: -6px;
+    background-color: #ffffff;
+}
+
+.angucomplete-searching {
+    color: #acacac;
+    font-size: 14px;
+}
+
+.angucomplete-description {
+    font-size: 14px;
+}
+
+.angucomplete-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+
+}
+
+.angucomplete-selected-row, .angucomplete-row:hover {
+    background-color: lightblue;
+    color: #ffffff;
+}
+
+.angucomplete-image-holder {
+    padding-top: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.angucomplete-image {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border-color: #ececec;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.angucomplete-image-default {
+    /* Add your own default image here
+     background-image: url('/assets/default.png');
+    */
+    background-position: center;
+    background-size: contain;
+    height: 34px;
+    width: 34px;
+}
+
+
+.xj-btn-tag-selected i {
+    display: block;
+}
+.xj-btn-tag-noselected i{
+    display: none;
+}

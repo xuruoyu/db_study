@@ -1,0 +1,51 @@
+<div ui-content-for="title">
+	<span>用户数统计</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_user_total">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('30day')">最近30天</button>
+	<button class="btn btn-success btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('12month')">最近12月</button>
+</div>
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的注册用户数</h4>
+			<canvas id="register_bar" class="chart chart-bar" data="register_data" labels="register_labels" series="register_series"></canvas>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的累计用户数</h4>
+			<canvas id="total_bar" class="chart chart-bar" data="total_data" labels="total_labels" series="total_series"></canvas>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的注册用户数和累计用户数</h4>
+			<div class="col-xs-8" style="padding-right:0;padding-left: 0;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>日期</td>
+					<td>新增数</td>
+				</tr>
+				<tr ng-repeat="data in datas">
+					<td>{{data.U}}</td>
+					<td>{{data.C}}</td>
+				</tr>
+			</table>
+				</div>
+			<div class="col-xs-4" style="padding-right:0;padding-left: 0;margin-left: -2px;">
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>累计数</td>
+				</tr>
+				<tr ng-repeat="message in messages">
+					<td>{{message.C}}</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<div ui-content-for="title">
+	<span>通话时长统计</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_session_time">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('30day')">最近30天</button>
+	<button class="btn btn-success btn-lg btn-block" ui-turn-off="uiSidebarRight" ng-click="loadData('12month')">最近12月</button>
+</div>
+<div class="scrollable">
+	<div class="scrollable-content section">
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的完成的通话总时长</h4>
+			<canvas id="duration_bar" class="chart chart-bar" data="duration_data" labels="duration_labels" series="duration_series" ></canvas>
+		</div>
+		<div class="col-xs-10 col-xs-offset-1 table-block-pad">
+			<h4>最近{{day}}的每天的完成的通话总时长</h4>
+			<table class="table table-bordered text-center">
+				<tr>
+					<td>日期</td>
+					<td>时长</td>
+				</tr>
+				<tr ng-repeat="data in datas">
+					<td>{{data.U}}</td>
+					<td>{{data.C | xxDuration}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

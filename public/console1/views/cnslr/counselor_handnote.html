@@ -1,0 +1,220 @@
+<div ui-content-for="title">
+    <span>咨询手记管理</span>
+</div>
+<div ui-content-for="navbarRight">
+    <div class="btn-group pull-right">
+        <button class="btn" ui-turn-on="saveHandnoteForm" ng-click="add()" xx-permission="p_post_note">
+            <i class="fa fa-plus"></i>
+        </button>
+        <button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_note">
+            <i class="fa fa-filter"></i>
+        </button>
+    </div>
+</div>
+<div ui-content-for="sidebarRight">
+    <form name="filterForm" ng-submit="reload()">
+        <fieldset>
+            <div class="form-group">
+                <label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="标题">
+            </div>
+        </fieldset>
+        <button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+    </form>
+</div>
+<div class="scrollable">
+    <div class="scrollable-header section">
+        <div class="panel panel-title panel-primary">
+            <div class="panel-heading">
+                <div class="row xj-margin0">
+                    <div class="col-xs-2 col-xs-offset-1 xj-padding0 text-left">昵称</div>
+                    <div class="col-xs-5 xj-padding0 text-right">标题</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scrollable-content section" ui-scroll-bottom="page.next()">
+        <div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0">
+            <span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+        </div>
+        <div class="panel-group" ng-show="page.elements.length>0">
+            <div class="panel panel-default" ng-repeat="e in page.elements">
+                <div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+                    <div class="row xj-margin0">
+                        <div class="col-xs-3 text-left xj-div-gender">
+                            <span>{{e.counselor.user.nickName}}</span>
+                        </div>
+                        <div class="col-xs-9 text-center xj-padding0">
+                            <span>{{e.title}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" ng-show="selected==$index">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><strong>创建时间：</strong></td>
+                            <td><span>{{e.happenTime}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>地点：</strong></td>
+                            <td><span>{{e.place}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>人物：</strong></td>
+                            <td><span>{{e.visitorName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>内容：</strong></td>
+                            <td><span style="word-break: break-all;" ng-bind-html="e.content"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>病症：</strong></td>
+                            <td><span ng-if="e.problems.length==0">无</span><span ng-repeat="problem in e.problems"><span ng-if="$last">{{problem.name}}</span><span ng-if="!$last">{{problem.name}}、</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>点评：</strong></td>
+                            <td><span ng-bind-html="e.comment"></span></td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="saveHandnoteForm" ng-click="modify(e)">修改手记</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center xj-div-button">
+                            <button class="btn btn-primary" ui-turn-on="photoUpload" ng-click="initUploadPhoto(e)">上传主图</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+        <span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+    </button>
+</div>
+
+<div ui-content-for="modals">
+    <!--上传手记的主图-->
+    <div class="modal modal-overlay scrollable" ui-if="photoUpload" ui-state="photoUpload">
+        <div class="scrollable-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">&times;</button>
+                        <h4 class="modal-title">{{modalTitle}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-content">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <h4>手记当前照片</h4>
+                                <img id="photo_old" class="center-block" style="max-width: 640px; height: auto;" src="{{oldPhoto}}" alt="暂无照片" />
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <h4>新上传照片</h4>
+                                <img id="photo_preview" class="center-block" ngf-src="photoFile" ngf-default-src="img/handnote_upload.png" style="max-width: 640px; height: auto;" />
+                                <div class="progress" ng-show="uploadPercentage!=null">
+                                    <div class="progress-bar progress-bar-success" style="min-width: 2em;width: {{uploadPercentage}}%;">{{uploadPercentage}}%</div>
+                                </div>
+                                <br />
+                                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isLoading||uploadPercentage!=null" ngf-select ngf-change="selectPhoto($files)" accept="image/jpeg">选择图片</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-footer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-footer">
+                        <div class="col-xs-6 col-md-offset-2 col-md-4">
+                            <button class="btn btn-primary btn-lg btn-block" ng-click="uploadPhoto()" ng-disabled="photoFile==null||isLoading||uploadPercentage!=null">上传</button>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <button class="btn btn-default btn-lg btn-block" ui-turn-off="photoUpload" ng-disabled="isLoading||uploadPercentage!=null">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-overlay scrollable" ui-if="saveHandnoteForm" ui-state="saveHandnoteForm">
+        <div class="scrollable-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" ui-turn-off="saveHandnoteForm" ng-disabled="isLoading">&times;</button>
+                        <h4 class="modal-title">{{modalTitle}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-content">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form name="saveHandnoteForm" ng-submit="saveHandnote()" novalidate>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':saveHandnoteForm.title.$invalid && !saveHandnoteForm.title.$pristine}" ng-if="counselor.id==null">
+                                    <span class="text-danger">*</span> <label>标题</label> <span class="text-info">(2-32个字符)</span> <input type="text" class="form-control" name="title" ng-model="handnote.title" required ng-minlength="2" ng-maxlength="32" required/>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{'has-error':saveHandnoteForm.happenTime.$invalid && !saveHandnoteForm.happenTime.$pristine}">
+                                    <span class="text-danger">*</span> <label>时间</label><span class="text-info">(时间格式为yyyy-MM-dd)</span>
+                                    <input id="dateTime" class="form-control" type="date" value="{{handnote.happenTime}}">
+                                    <!--<div ng-model="handnote.happenTime">{{date || '(请选择日期)'}}</div>-->
+                                    <!--&lt;!&ndash;<input type="text" class="form-control" ng-model="handnote.happenTime" name="happenTime" required value="{{date || '(请选择日期)'}}"/>&ndash;&gt;-->
+                                    <!--<div pickadate="handnote.happenTime" ng-model="date" min-date="minDate" max-date="maxDate"></div>-->
+                                    <!--<input type="text" class="form-control" ng-model="handnote.happenTime" name="happenTime" ng-pattern="/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/" required>-->
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <label>地点</label> <input type="text" class="form-control" name="place" ng-model="handnote.place" placeholder="请输入地点"/>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':saveHandnoteForm.visitorName.$invalid && !saveHandnoteForm.visitorName.$pristine }">
+                                    <span class="text-danger">*</span> <label>人物</label> <span class="text-info">(1-32个字符)</span> <input type="text" class="form-control" name="visitorName" ng-model="handnote.visitorName" placeholder="请输入人物" required/>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':saveHandnoteForm.content.$invalid && !saveHandnoteForm.content.$pristine }">
+                                    <span class="text-danger">*</span> <label>内容</label> <span class="text-info">(256字符以上)</span>
+                                    <!--<textarea class="form-control" name="content" ng-model="handnote.content" ng-minlength="256" required></textarea>-->
+                                    <div text-angular="text-angular" name="content" ng-model="handnote.content"></div>
+                                    <textarea style="display: none" ng-model="handnote.content" style="width: 100%" ng-minlength="256" required></textarea>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <span class="text-danger">*</span><label>病症</label>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="s in sicks" ng-click="selectSicks(s)">{{s.name}}<i ng-show="input_sicks[s.id]" class="fa fa-check pull-right text-primary"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <label>点评</label> <span class="text-info">(选填)</span>
+                                    <input type="text" class="form-control" name="comment" ng-model="handnote.comment" placeholder="请输入点评"/>
+                                    <!--<div text-angular="text-angular" name="comment" ng-model="handnote.comment"></div>-->
+                                    <!--<textarea style="display: none" ng-model="handnote.comment" style="width: 100%"></textarea>-->
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <span class="text-danger">*</span><label>所属咨询师</label><span class="text-info">(必填,只能选择搜索中的咨询师,不能手动填写)</span>
+                                    <div angucomplete-alt id="ex1" placeholder="请输入关键字" pause="400" selected-object="selectedProjectFn" initial-value="selectedProject" remote-url="/server/console/counselor/no_auth/for_select?keyword=" remote-url-data-field="payload" search-fields="realName" title-field="realName" minlength="1" input-class="form-control form-control-small"
+                                         match-class="highlight" field-required="true"></div>
+                                    <!--You selected <span class="bold-span">{{selectedProject.realName}}{{selectedProject.id}}</span>-->
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <div class="col-xs-6">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="saveHandnoteForm.$invalid||isLoading">保存</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="saveHandnoteForm" ng-disabled="isLoading">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

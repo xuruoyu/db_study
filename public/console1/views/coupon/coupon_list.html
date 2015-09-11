@@ -1,0 +1,170 @@
+<div ui-content-for="title">
+	<span>代金券列表</span>
+</div>
+<div ui-content-for="navbarRight">
+	<div class="btn-group pull-right">
+        <button class="btn" ui-turn-on="couponCreateForm" ng-click="add()" xx-permission="p_post_cash_coupon_sales">
+            <i class="fa fa-plus"></i>
+        </button>
+		<button class="btn" ui-toggle="uiSidebarRight" xx-permission="p_get_cash_coupon_sales">
+			<i class="fa fa-filter"></i>
+		</button>
+	</div>
+</div>
+<div ui-content-for="sidebarRight">
+	<form name="filterForm" ng-submit="reload()">
+		<fieldset>
+			<div class="form-group">
+				<label>关键字</label> <input type="text" ng-model="input_keyword" class="form-control" placeholder="销售代号/客户名称">
+			</div>
+		</fieldset>
+		<button class="btn btn-primary btn-lg btn-block" ui-turn-off="uiSidebarRight">刷新列表</button>
+	</form>
+</div>
+<div class="scrollable">
+	<div class="scrollable-header section">
+		<div class="panel panel-title panel-primary">
+			<div class="panel-heading">
+				<div class="row xj-margin0">
+                    <div class="col-xs-4 xj-padding0">销售代号</div>
+                    <div class="col-xs-4 xj-padding0">客户名称</div>
+					<div class="col-xs-2 xj-padding0">每份金额</div>
+					<div class="col-xs-2 xj-padding0">份数</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scrollable-content section" ui-scroll-bottom="page.next()">
+		<div class="text-center fa-5x xj-vertical-center text-primary" ng-show="page.elements.length==0">
+			<span class="fa fa-refresh" ng-hide="isLoading" ng-click="reload()"></span> <span class="fa fa-spinner fa-spin loading-spinner" ng-show="isLoading"></span>
+		</div>
+		<div class="panel-group" ng-show="page.elements.length>0">
+			<div class="panel panel-default" ng-repeat="e in page.elements">
+				<div class="panel-heading" ng-click="selected==$index?selected=null:selected=$index">
+					<div class="row xj-margin0">
+						<div class="col-xs-4 xj-padding0">
+                            <span>{{e.code}}</span>
+						</div>
+                        <div class="col-xs-4 xj-padding0">
+                            <span>{{e.customer}}</span>
+                        </div>
+                        <div class="col-xs-2 xj-padding0">
+                            <span>{{e.cashPerCoupon}}</span>
+                        </div>
+						<div class="col-xs-2 xj-padding0">
+							<span>{{e.couponNumber}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body" ng-show="selected==$index">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>
+                                <strong>id：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.id}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>创建时间：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.createTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>生效时间：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.effectTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>失效时间：</strong>
+                            </td>
+                            <td>
+                                <span>{{e.expireTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                            </td>
+                        </tr>
+                    </table>
+					<div class="row">
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
+                            <button class="btn btn-primary" ui-turn-on="couponList" ng-click="downloadCoupon(e)" xx-permission="p_get_cash_coupon" ng-show="e.downloadCount==0">下载代金券</button>
+                            <button class="btn btn-primary" ui-turn-on="couponList" ng-click="downloadCoupon(e)" xx-permission="p_get_cash_coupon" ng-show="e.downloadCount>0">代金券已下载{{e.downloadCount}}次</button>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="btn btn-block btn-primary scrollable-footer" ng-disabled="!page.hasNext()||isLoading" ng-click="page.next()">
+		<span class="fa fa-arrow-down" ng-if="!isLoading">更多 ({{page.elements.length}}/{{page.lastPayload.totalElements}})</span><i class="fa fa-spinner fa-spin fa-lg loading-spinner" ng-if="isLoading"></i>
+	</button>
+</div>
+
+<div ui-content-for="modals">
+    <div class="modal modal-overlay scrollable" ui-if="couponCreateForm" ui-state="couponCreateForm">
+        <div class="scrollable-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" ui-turn-off="couponCreateForm" ng-disabled="isLoading">&times;</button>
+                        <h4 class="modal-title">{{modalTitle}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-content">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form name="couponCreateForm" ng-submit="createCoupon()" novalidate>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.code.$invalid && !couponCreateForm.code.$pristine }">
+                                    <span class="text-danger">*</span> <label>销售代号</label> <span class="text-info">(必填，唯一，2-256个字符)</span>
+                                    <input type="text" class="form-control" name="code" ng-model="coupon.code" placeholder="请输入销售代号" required ng-minlength="2" ng-maxlength="256" />
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.customer.$invalid && !couponCreateForm.customer.$pristine }">
+                                    <span class="text-danger">*</span> <label>客户名称</label> <span class="text-info">(必填，2-256个字符)</span>
+                                    <input type="text" class="form-control" name="customer" ng-model="coupon.customer" placeholder="请输入客户名称" required ng-minlength="2" ng-maxlength="256" />
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.cashPerCoupon.$invalid && !couponCreateForm.cashPerCoupon.$pristine }">
+                                    <span class="text-danger">*</span> <label>代金券面值</label> <span class="text-info">(必填，10-1000000元)</span>
+                                    <input type="number" class="form-control" name="cashPerCoupon" ng-model="coupon.cashPerCoupon" placeholder="请输入整数" data-max="1000000" data-min="10" required ng-pattern="/^(([1-9]{1}\d*)|([0]{1}))(\.\d{1,2})?$/" />
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.couponNumber.$invalid && !couponCreateForm.couponNumber.$pristine }">
+                                    <span class="text-danger">*</span> <label>代金券份数</label> <span class="text-info">(必填，大于1的正整数)</span>
+                                    <input type="number" class="form-control" name="couponNumber" ng-model="coupon.couponNumber" placeholder="请输入大于1的正整数" data-max="1000000" data-min="1" required ng-pattern="/^(([1-9]{1}\d*)|([0]{1}))(\.\d{1,2})?$/" />
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.effectTime.$invalid && !couponCreateForm.effectTime.$pristine }">
+                                    <span class="text-danger">*</span> <label>生效时间</label>
+                                    <p>当前设置: {{ coupon.effectTime | date:'yyyy-MM-dd HH:mm' }}</p>
+                                    <input type="datetime-local" required data-ng-model="coupon.effectTime">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2" ng-class="{ 'has-error':couponCreateForm.expireTime.$invalid && !couponCreateForm.expireTime.$pristine }">
+                                    <span class="text-danger">*</span> <label>失效时间</label>
+                                    <p>当前设置: {{ coupon.expireTime | date:'yyyy-MM-dd HH:mm' }}</p>
+                                    <input type="datetime-local" required data-ng-model="coupon.expireTime">
+                                </div>
+                                <div class="form-group col-xs-12 col-md-8 col-md-offset-2">
+                                    <div class="col-xs-6">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="couponCreateForm.$invalid||isLoading">保存</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="reset" class="btn btn-default btn-lg btn-block" ui-turn-off="couponCreateForm" ng-disabled="isLoading">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
